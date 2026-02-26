@@ -1,2 +1,2 @@
-# recipe_ratings_analysis
+# Recipe Ratings Analysis
 Final project for DSC80 at UCSD
