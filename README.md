@@ -11,6 +11,31 @@ With this in mind, this project investigates **what actually makes a recipe heal
 
 To explore this question, I analyze two datasets from Food.com, `RAW_recipes` and `interactions`, containing recipe postings and ratings.
 
+`Raw_recipes` contains 83782 rows and 12 columns:
+
+| Column | Description |
+|-------|-------------|
+| `name` | Recipe name |
+| `id` | Recipe ID |
+| `minutes` | Minutes to prepare recipe |
+| `contributor_id` | User ID of recipe author |
+| `submitted` | Date of recipe submission |
+| `tags` | Food.com tags for recipe |
+| `nutrition` | Nutrition info: calories, fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbs (PDV) |
+| `n_steps` | Number of steps in recipe |
+| `steps` | Description of recipe steps |
+| `description` | User-provided description |
+
+`interactions` contains 731927 rows and 5 columns:
+
+| Column | Description |
+|-------|-------------|
+| `user_id` | User ID |
+| `recipe_id` | Recipe ID |
+| `date` | Date of review |
+| `rating` | Rating given (1-5) |
+| `review` | Review commentary |
+
 
 ## Data Cleaning and Exploratory Data Analysis
 
