@@ -48,7 +48,7 @@ Valid ratings range from 1 to 5, where 1 indicates a very negative rating and 5 
 The mean rating is calculated for each recipe using the ratings from the merged dataset. Because `NaN` values are ignored in mean calculations, missing ratings do not affect the result.
 4. **Merge the average ratings back into the `recipes` dataset.**
 The resulting DataFrame contains one row per recipe along with its average rating. This DataFrame is used for the remainder of the analysis.
-The first 10 rows of the resulting dataset are shown below.
+The resulting dataset contains 13 columns (the original 12 columns from `recipes` plus `avg_rating`). Because there are quite a few columns, a preview of the first 10 rows of a few relevant columns in the resulting dataset are shown below.
 
 | name                                    |   minutes | tags                                        | ingredients                                                                      |   n_ingredients |   avg_rating |
 |:----------------------------------------|----------:|:--------------------------------------------|:---------------------------------------------------------------------------------|----------------:|-------------:|
