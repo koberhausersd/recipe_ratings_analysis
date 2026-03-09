@@ -50,18 +50,18 @@ The mean rating is calculated for each recipe using the ratings from the merged 
 The resulting DataFrame contains one row per recipe along with its average rating. This DataFrame is used for the remainder of the analysis.
 The resulting dataset contains 13 columns (the original 12 columns from `recipes` plus `avg_rating`). Because there are quite a few columns, a preview of the first 10 rows of a few relevant columns in the resulting dataset are shown below.
 
-| name                                    |   minutes | tags                                        | ingredients                                                                      |   n_ingredients |   avg_rating |
-|:----------------------------------------|----------:|:--------------------------------------------|:---------------------------------------------------------------------------------|----------------:|-------------:|
-| 1 brownies in the world    best ever    |        40 | 60-minutes-or-less, time-to-make, course    | bittersweet chocolate, unsalted butter, eggs, granulated sugar                   |               9 |            4 |
-| 1 in canada chocolate chip cookies      |        45 | 60-minutes-or-less, time-to-make, cuisine   | white sugar, brown sugar, salt, margarine                                        |              11 |            5 |
-| 412 broccoli casserole                  |        40 | 60-minutes-or-less, time-to-make, course    | frozen broccoli cuts, cream of chicken soup, sharp cheddar cheese, garlic powder |               9 |            5 |
-| millionaire pound cake                  |       120 | time-to-make, course, cuisine               | butter, sugar, eggs, all-purpose flour                                           |               7 |            5 |
-| 2000 meatloaf                           |        90 | time-to-make, course, main-ingredient       | meatloaf mixture, unsmoked bacon, goat cheese, unsalted butter                   |              13 |            5 |
-| 5 tacos                                 |        20 | weeknight, 30-minutes-or-less, time-to-make | ground beef, taco seasoning, taco shells, lettuce                                |               9 |            4 |
-| 50 chili   for the crockpot             |       345 | course, main-ingredient, cuisine            | stewing beef, stewing pork, white onion, bell peppers                            |              22 |            5 |
-| blepandekager   danish   apple pancakes |        50 | danish, 60-minutes-or-less, time-to-make    | eggs, milk, flour, sugar                                                         |              10 |            5 |
-| lplermagrone                            |        50 | 60-minutes-or-less, time-to-make, course    | milk, salt, macaroni, cheese                                                     |               8 |            5 |
-| lplermagrone  herdsman s macaroni       |        40 | 60-minutes-or-less, time-to-make, course    | potato, salt water, macaroni, heavy cream                                        |              10 |            5 |
+| name                                    |   minutes | tags                                        | ingredients                                                                      | nutrition                                      |   avg_rating |
+|:----------------------------------------|----------:|:--------------------------------------------|:---------------------------------------------------------------------------------|:-----------------------------------------------|-------------:|
+| 1 brownies in the world    best ever    |        40 | 60-minutes-or-less, time-to-make, course    | bittersweet chocolate, unsalted butter, eggs, granulated sugar                   | [138.4, 10.0, 50.0, 3.0, 3.0, 19.0, 6.0]       |            4 |
+| 1 in canada chocolate chip cookies      |        45 | 60-minutes-or-less, time-to-make, cuisine   | white sugar, brown sugar, salt, margarine                                        | [595.1, 46.0, 211.0, 22.0, 13.0, 51.0, 26.0]   |            5 |
+| 412 broccoli casserole                  |        40 | 60-minutes-or-less, time-to-make, course    | frozen broccoli cuts, cream of chicken soup, sharp cheddar cheese, garlic powder | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]      |            5 |
+| millionaire pound cake                  |       120 | time-to-make, course, cuisine               | butter, sugar, eggs, all-purpose flour                                           | [878.3, 63.0, 326.0, 13.0, 20.0, 123.0, 39.0]  |            5 |
+| 2000 meatloaf                           |        90 | time-to-make, course, main-ingredient       | meatloaf mixture, unsmoked bacon, goat cheese, unsalted butter                   | [267.0, 30.0, 12.0, 12.0, 29.0, 48.0, 2.0]     |            5 |
+| 5 tacos                                 |        20 | weeknight, 30-minutes-or-less, time-to-make | ground beef, taco seasoning, taco shells, lettuce                                | [249.4, 26.0, 4.0, 6.0, 39.0, 39.0, 0.0]       |            4 |
+| 50 chili   for the crockpot             |       345 | course, main-ingredient, cuisine            | stewing beef, stewing pork, white onion, bell peppers                            | [270.2, 19.0, 26.0, 48.0, 52.0, 21.0, 4.0]     |            5 |
+| blepandekager   danish   apple pancakes |        50 | danish, 60-minutes-or-less, time-to-make    | eggs, milk, flour, sugar                                                         | [358.2, 30.0, 62.0, 14.0, 19.0, 54.0, 12.0]    |            5 |
+| lplermagrone                            |        50 | 60-minutes-or-less, time-to-make, course    | milk, salt, macaroni, cheese                                                     | [1003.8, 72.0, 21.0, 103.0, 69.0, 143.0, 37.0] |            5 |
+| lplermagrone  herdsman s macaroni       |        40 | 60-minutes-or-less, time-to-make, course    | potato, salt water, macaroni, heavy cream                                        | [708.6, 52.0, 19.0, 24.0, 46.0, 104.0, 25.0]   |            5 |
 
 
 ## Assessment of Missingness
