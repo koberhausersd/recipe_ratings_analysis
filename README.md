@@ -63,6 +63,33 @@ The resulting dataset contains 13 columns (the original 12 columns from `recipes
 | lplermagrone                            |        50 | 60-minutes-or-less, time-to-make, course    | milk, salt, macaroni, cheese                                                     | [1003.8, 72.0, 21.0, 103.0, 69.0, 143.0, 37.0] |            5 |
 | lplermagrone  herdsman s macaroni       |        40 | 60-minutes-or-less, time-to-make, course    | potato, salt water, macaroni, heavy cream                                        | [708.6, 52.0, 19.0, 24.0, 46.0, 104.0, 25.0]   |            5 |
 
+5. **Convert the values in the nutrition column into separate numeric nutrient columns.**
+In the original dataset, the nutrition column is stored as a string that looks like a list containing seven values. Each value corresponds to a different nutrient measurement.
+To make these values usable for analysis, the brackets were first removed from the string and the remaining values were split on commas. This produced seven separate columns representing:
+- calories
+- total fat
+- sugar
+- sodium
+- protein
+- saturated fat
+- carbohydrates
+These columns were converted to numeric values and appended to the DataFrame. The original nutrition column was then dropped.
+After this transformation, the dataset increased from 13 columns to 19 columns, since the single nutrition column was replaced with seven separate nutrient columns. The first few rows of the new nutrition columns are shown below.
+
+|   calories |   total_fat |   sugar |   sodium |   protein |   saturated_fat |   carbs |
+|-----------:|------------:|--------:|---------:|----------:|----------------:|--------:|
+|      138.4 |          10 |      50 |        3 |         3 |              19 |       6 |
+|      595.1 |          46 |     211 |       22 |        13 |              51 |      26 |
+|      194.8 |          20 |       6 |       32 |        22 |              36 |       3 |
+|      878.3 |          63 |     326 |       13 |        20 |             123 |      39 |
+|      267   |          30 |      12 |       12 |        29 |              48 |       2 |
+
+6. **Remove rows with invalid nutrition data.**
+26 rows contained zero calories but non-zero values for sodium. Inspecting these rows revealed that many corresponded to non-food items (e.g., garbage disposal cleaner and dishwasher detergent), low-calorie items that have no nutritional value such as salt, or recipes where the zero-calorie nutrition information was clearly invalid (e.g., easy microwave popcorn, indian griddle flatbreads). Because these values are inconsistent and cannot represent real food items, these 26 rows were removed from the dataset.
+7. **Remove extreme outliers in the nutrition columns.**
+Inspection of the distributions of the 7 nutrition variables revealed that the maximum values in each column were substantially larger than the 99th percentile. This indicates that a small number of recipes contain extremely large nutritional values, likely due to data entry errors or recipes that represent multiple servings rather than a single serving. Because these extreme values represent only a small proportion of the dataset and the number of servings per recipe is not provided, recipes with nutrition values above the 99th percentile for each nutrient were removed from the dataset.
+8. **Create nutrient density variables.**
+
 
 ## Assessment of Missingness
 
