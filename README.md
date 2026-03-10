@@ -39,6 +39,7 @@ To explore this question, I analyze two datasets from Food.com, `recipes` and `i
 In my analysis, I will mainly focus on the `nutrition` and `tags` columns in the `recipes` data. As described in the table above, `nutrition` contains the amounts of each nutrient in each recipe, and `tags` contains labels associated with a recipe such as "healthy", "low-fat", and "low-carb". Looking at how these features interact allows me to uncover patterns as to which nutritional characteristics "healthy" recipes tend to have.
 
 ## Data Cleaning and Exploratory Data Analysis
+### Data Cleaning
 The data was cleaned using the following steps:
 1. **Left merge the recipes dataset with the ratings dataset.**
 This creates a single DataFrame containing both datasets by matching each recipe in `recipes` with its corresponding ratings in `interactions`.
@@ -129,7 +130,12 @@ Results: The cleaned DataFrame has 78,125 rows and 25 columns.
 | saturated_fat_density | float64 |
 | carbs_density         | float64 |
 
+Insert head of final DataFrame here
+
+### Univariate Analysis
+
 ## Assessment of Missingness
+
 
 ## Hypothesis Testing
 
