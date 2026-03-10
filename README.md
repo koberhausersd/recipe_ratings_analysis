@@ -67,13 +67,13 @@ The resulting dataset contains 13 columns (the original 12 columns from `recipes
 In the original dataset, the nutrition column is stored as a string that looks like a list containing seven values. Each value corresponds to a different nutrient measurement.
 To make these values usable for analysis, the brackets were first removed from the string and the remaining values were split on commas. This produced seven separate columns representing:
 - calories
-- total fat
+- total_fat
 - sugar
 - sodium
 - protein
-- saturated fat
+- saturated_fat
 - carbohydrates
-These columns were converted to numeric values and appended to the DataFrame. The original nutrition column was then dropped.
+These columns were converted to float values and appended to the DataFrame. The original nutrition column was then dropped.
 After this transformation, the dataset increased from 13 columns to 19 columns, since the single nutrition column was replaced with seven separate nutrient columns. The first few rows of the new nutrition columns are shown below.
 
 |   calories |   total_fat |   sugar |   sodium |   protein |   saturated_fat |   carbs |
@@ -89,6 +89,20 @@ After this transformation, the dataset increased from 13 columns to 19 columns, 
 7. **Remove extreme outliers in the nutrition columns.**
 Inspection of the distributions of the 7 nutrition variables revealed that the maximum values in each column were substantially larger than the 99th percentile. This indicates that a small number of recipes contain extremely large nutritional values, likely due to data entry errors or recipes that represent multiple servings rather than a single serving. Because these extreme values represent only a small proportion of the dataset and the number of servings per recipe is not provided, recipes with nutrition values above the 99th percentile for each nutrient were removed from the dataset.
 8. **Create nutrient density variables.**
+Except for calories, all other nutrient columns (total_fat, saturated_fat, sugar, protein, carbohydrates, sodium) are in PDV (percent daily value) units. To make these values comparable across recipes of different calorie levels, nutrient density variables were created by dividing each nutrient column by the calorie value in each recipe. These density features represent the amount of each nutrient per calorie, allowing for more meaningful comparisons between recipes with different calorie levels.
+The following columns were appended to our DataFrame:
+|   total_fat_density |   sugar_density |   sodium_density |   protein_density |   saturated_fat_density |   carbs_density |
+|--------------------:|----------------:|-----------------:|------------------:|------------------------:|----------------:|
+|                0.07 |            0.36 |             0.02 |              0.02 |                    0.14 |            0.04 |
+|                0.08 |            0.35 |             0.04 |              0.02 |                    0.09 |            0.04 |
+|                0.1  |            0.03 |             0.16 |              0.11 |                    0.18 |            0.02 |
+|                0.07 |            0.37 |             0.01 |              0.02 |                    0.14 |            0.04 |
+|                0.11 |            0.04 |             0.04 |              0.11 |                    0.18 |            0.01 |
+
+Results: The cleaned DataFrame has 78,125 rows and 25 columns.
+
+'| 0       |\n|:--------|\n| object  |\n| int64   |\n| int64   |\n| int64   |\n| object  |\n| object  |\n| int64   |\n| object  |\n| object  |\n| object  |\n| int64   |\n| float64 |\n| float64 |\n| float64 |\n| float64 |\n| float64 |\n| float64 |\n| float64 |\n| float64 |\n| float64 |\n| float64 |\n| float64 |\n| float64 |\n| float64 |\n| float64 |'
+
 
 
 ## Assessment of Missingness
