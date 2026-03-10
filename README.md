@@ -91,12 +91,43 @@ Inspection of the distributions of the 7 nutrition variables revealed that the m
 8. **Create nutrient density variables.**
 Except for calories, all other nutrient columns (total_fat, saturated_fat, sugar, protein, carbohydrates, sodium) are in PDV (percent daily value) units. To make these values comparable across recipes of different calorie levels, nutrient density variables were created by dividing each nutrient column by the calorie value in each recipe. These density features represent the amount of each nutrient per calorie, allowing for more meaningful comparisons between recipes with different calorie levels.
 The following columns were appended to our DataFrame:
-'|   total_fat_density |   sugar_density |   sodium_density |   protein_density |   saturated_fat_density |   carbs_density |\n|--------------------:|----------------:|-----------------:|------------------:|------------------------:|----------------:|\n|                0.07 |            0.36 |             0.02 |              0.02 |                    0.14 |            0.04 |\n|                0.08 |            0.35 |             0.04 |              0.02 |                    0.09 |            0.04 |\n|                0.1  |            0.03 |             0.16 |              0.11 |                    0.18 |            0.02 |\n|                0.07 |            0.37 |             0.01 |              0.02 |                    0.14 |            0.04 |\n|                0.11 |            0.04 |             0.04 |              0.11 |                    0.18 |            0.01 |'
+|   total_fat_density |   sugar_density |   sodium_density |   protein_density |   saturated_fat_density |   carbs_density |
+|--------------------:|----------------:|-----------------:|------------------:|------------------------:|----------------:|
+|                0.07 |            0.36 |             0.02 |              0.02 |                    0.14 |            0.04 |
+|                0.08 |            0.35 |             0.04 |              0.02 |                    0.09 |            0.04 |
+|                0.1  |            0.03 |             0.16 |              0.11 |                    0.18 |            0.02 |
+|                0.07 |            0.37 |             0.01 |              0.02 |                    0.14 |            0.04 |
+|                0.11 |            0.04 |             0.04 |              0.11 |                    0.18 |            0.01 |
 
 Results: The cleaned DataFrame has 78,125 rows and 25 columns.
 
-'|                       | dtype   |\n|:----------------------|:--------|\n| name                  | object  |\n| id                    | int64   |\n| minutes               | int64   |\n| contributor_id        | int64   |\n| submitted             | object  |\n| tags                  | object  |\n| n_steps               | int64   |\n| steps                 | object  |\n| description           | object  |\n| ingredients           | object  |\n| n_ingredients         | int64   |\n| avg_rating            | float64 |\n| calories              | float64 |\n| total_fat             | float64 |\n| sugar                 | float64 |\n| sodium                | float64 |\n| protein               | float64 |\n| saturated_fat         | float64 |\n| carbs                 | float64 |\n| total_fat_density     | float64 |\n| sugar_density         | float64 |\n| sodium_density        | float64 |\n| protein_density       | float64 |\n| saturated_fat_density | float64 |\n| carbs_density         | float64 |'
-
+| column                | dtype   |
+|:----------------------|:--------|
+| name                  | object  |
+| id                    | int64   |
+| minutes               | int64   |
+| contributor_id        | int64   |
+| submitted             | object  |
+| tags                  | object  |
+| n_steps               | int64   |
+| steps                 | object  |
+| description           | object  |
+| ingredients           | object  |
+| n_ingredients         | int64   |
+| avg_rating            | float64 |
+| calories              | float64 |
+| total_fat             | float64 |
+| sugar                 | float64 |
+| sodium                | float64 |
+| protein               | float64 |
+| saturated_fat         | float64 |
+| carbs                 | float64 |
+| total_fat_density     | float64 |
+| sugar_density         | float64 |
+| sodium_density        | float64 |
+| protein_density       | float64 |
+| saturated_fat_density | float64 |
+| carbs_density         | float64 |
 
 ## Assessment of Missingness
 
