@@ -103,7 +103,6 @@ The following columns were appended to the DataFrame:
 
 The first five rows of these new columns are shown below.
 
-|   total_fat_density |   sugar_density |   sodium_density |   protein_density |   saturated_fat_density |   carbs_density |
 | total_fat_density | sugar_density | sodium_density | protein_density | saturated_fat_density | carbs_density |
 |------------------:|--------------:|---------------:|----------------:|----------------------:|--------------:|
 | 0.07 | 0.36 | 0.02 | 0.02 | 0.14 | 0.04 |
