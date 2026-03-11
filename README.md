@@ -147,6 +147,15 @@ Insert head of final DataFrame here
 ### Univariate Analysis
 Oftentimes, we interpret healthy foods as being low calorie. This is likely due to the nature of whole, unprocessed foods being calorically less dense than fast food and other processed foods. As an overview of our data, here is the calorie distribution within the recipe dataset.
 
+<iframe
+  src="assets/calorie_distribution.html"
+  width="900"
+  height="600"
+  frameborder="0"
+></iframe>
+
+
+
 ## Assessment of Missingness
 
 
