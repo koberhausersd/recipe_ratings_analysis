@@ -91,14 +91,26 @@ After this transformation, the dataset increased from 13 columns to 19 columns, 
 Inspection of the distributions of the 7 nutrition variables revealed that the maximum values in each column were substantially larger than the 99th percentile. This indicates that a small number of recipes contain extremely large nutritional values, likely due to data entry errors or recipes that represent multiple servings rather than a single serving. Because these extreme values represent only a small proportion of the dataset and the number of servings per recipe is not provided, recipes with nutrition values above the 99th percentile for each nutrient were removed from the dataset.
 8. **Create nutrient density variables.**
 Except for calories, all other nutrient columns (total_fat, saturated_fat, sugar, protein, carbohydrates, sodium) are in PDV (percent daily value) units. To make these values comparable across recipes of different calorie levels, nutrient density variables were created by dividing each nutrient column by the calorie value in each recipe. These density features represent the amount of each nutrient per calorie, allowing for more meaningful comparisons between recipes with different calorie levels.
-The following columns were appended to our DataFrame:
+
+The following columns were appended to the DataFrame:
+
+- `total_fat_density`
+- `sugar_density`
+- `sodium_density`
+- `protein_density`
+- `saturated_fat_density`
+- `carbs_density`
+
+The first five rows of these new columns are shown below.
+
 |   total_fat_density |   sugar_density |   sodium_density |   protein_density |   saturated_fat_density |   carbs_density |
-|--------------------:|----------------:|-----------------:|------------------:|------------------------:|----------------:|
-|                0.07 |            0.36 |             0.02 |              0.02 |                    0.14 |            0.04 |
-|                0.08 |            0.35 |             0.04 |              0.02 |                    0.09 |            0.04 |
-|                0.1  |            0.03 |             0.16 |              0.11 |                    0.18 |            0.02 |
-|                0.07 |            0.37 |             0.01 |              0.02 |                    0.14 |            0.04 |
-|                0.11 |            0.04 |             0.04 |              0.11 |                    0.18 |            0.01 |
+| total_fat_density | sugar_density | sodium_density | protein_density | saturated_fat_density | carbs_density |
+|------------------:|--------------:|---------------:|----------------:|----------------------:|--------------:|
+| 0.07 | 0.36 | 0.02 | 0.02 | 0.14 | 0.04 |
+| 0.08 | 0.35 | 0.04 | 0.02 | 0.09 | 0.04 |
+| 0.10 | 0.03 | 0.16 | 0.11 | 0.18 | 0.02 |
+| 0.07 | 0.37 | 0.01 | 0.02 | 0.14 | 0.04 |
+| 0.11 | 0.04 | 0.04 | 0.11 | 0.18 | 0.01 |
 
 Results: The cleaned DataFrame has 78,125 rows and 25 columns.
 
@@ -133,6 +145,7 @@ Results: The cleaned DataFrame has 78,125 rows and 25 columns.
 Insert head of final DataFrame here
 
 ### Univariate Analysis
+Oftentimes, we interpret healthy foods as being low calorie. This is likely due to the nature of whole, unprocessed foods being calorically less dense than fast food and other processed foods. As an overview of our data, here is the calorie distribution within the recipe dataset.
 
 ## Assessment of Missingness
 
