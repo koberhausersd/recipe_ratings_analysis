@@ -49,20 +49,15 @@ Valid ratings range from 1 to 5, where 1 indicates a very negative rating and 5 
 The mean rating is calculated for each recipe using the ratings from the merged dataset. Because `NaN` values are ignored in mean calculations, missing ratings do not affect the result.
 4. **Merge the average ratings back into the `recipes` dataset.**
 The resulting DataFrame contains one row per recipe along with its average rating. This DataFrame is used for the remainder of the analysis.
-The resulting dataset contains 13 columns (the original 12 columns from `recipes` plus `avg_rating`). Because there are quite a few columns, a preview of the first 10 rows of a few relevant columns in the resulting dataset are shown below.
+The resulting dataset contains 13 columns (the original 12 columns from `recipes` plus `avg_rating`). Because there are quite a few columns, a preview of the first 5 rows of a few relevant columns in the resulting dataset are shown below.
 
-| name                                    |   minutes | tags                                        | ingredients                                                                      | nutrition                                      |   avg_rating |
-|:----------------------------------------|----------:|:--------------------------------------------|:---------------------------------------------------------------------------------|:-----------------------------------------------|-------------:|
-| 1 brownies in the world    best ever    |        40 | 60-minutes-or-less, time-to-make, course    | bittersweet chocolate, unsalted butter, eggs, granulated sugar                   | [138.4, 10.0, 50.0, 3.0, 3.0, 19.0, 6.0]       |            4 |
-| 1 in canada chocolate chip cookies      |        45 | 60-minutes-or-less, time-to-make, cuisine   | white sugar, brown sugar, salt, margarine                                        | [595.1, 46.0, 211.0, 22.0, 13.0, 51.0, 26.0]   |            5 |
-| 412 broccoli casserole                  |        40 | 60-minutes-or-less, time-to-make, course    | frozen broccoli cuts, cream of chicken soup, sharp cheddar cheese, garlic powder | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]      |            5 |
-| millionaire pound cake                  |       120 | time-to-make, course, cuisine               | butter, sugar, eggs, all-purpose flour                                           | [878.3, 63.0, 326.0, 13.0, 20.0, 123.0, 39.0]  |            5 |
-| 2000 meatloaf                           |        90 | time-to-make, course, main-ingredient       | meatloaf mixture, unsmoked bacon, goat cheese, unsalted butter                   | [267.0, 30.0, 12.0, 12.0, 29.0, 48.0, 2.0]     |            5 |
-| 5 tacos                                 |        20 | weeknight, 30-minutes-or-less, time-to-make | ground beef, taco seasoning, taco shells, lettuce                                | [249.4, 26.0, 4.0, 6.0, 39.0, 39.0, 0.0]       |            4 |
-| 50 chili   for the crockpot             |       345 | course, main-ingredient, cuisine            | stewing beef, stewing pork, white onion, bell peppers                            | [270.2, 19.0, 26.0, 48.0, 52.0, 21.0, 4.0]     |            5 |
-| blepandekager   danish   apple pancakes |        50 | danish, 60-minutes-or-less, time-to-make    | eggs, milk, flour, sugar                                                         | [358.2, 30.0, 62.0, 14.0, 19.0, 54.0, 12.0]    |            5 |
-| lplermagrone                            |        50 | 60-minutes-or-less, time-to-make, course    | milk, salt, macaroni, cheese                                                     | [1003.8, 72.0, 21.0, 103.0, 69.0, 143.0, 37.0] |            5 |
-| lplermagrone  herdsman s macaroni       |        40 | 60-minutes-or-less, time-to-make, course    | potato, salt water, macaroni, heavy cream                                        | [708.6, 52.0, 19.0, 24.0, 46.0, 104.0, 25.0]   |            5 |
+| name                                 |   minutes | tags                                      | ingredients                                                                      | nutrition                                     |   avg_rating |
+|:-------------------------------------|----------:|:------------------------------------------|:---------------------------------------------------------------------------------|:----------------------------------------------|-------------:|
+| 1 brownies in the world    best ever |        40 | 60-minutes-or-less, time-to-make, course  | bittersweet chocolate, unsalted butter, eggs, granulated sugar                   | [138.4, 10.0, 50.0, 3.0, 3.0, 19.0, 6.0]      |            4 |
+| 1 in canada chocolate chip cookies   |        45 | 60-minutes-or-less, time-to-make, cuisine | white sugar, brown sugar, salt, margarine                                        | [595.1, 46.0, 211.0, 22.0, 13.0, 51.0, 26.0]  |            5 |
+| 412 broccoli casserole               |        40 | 60-minutes-or-less, time-to-make, course  | frozen broccoli cuts, cream of chicken soup, sharp cheddar cheese, garlic powder | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]     |            5 |
+| millionaire pound cake               |       120 | time-to-make, course, cuisine             | butter, sugar, eggs, all-purpose flour                                           | [878.3, 63.0, 326.0, 13.0, 20.0, 123.0, 39.0] |            5 |
+| 2000 meatloaf                        |        90 | time-to-make, course, main-ingredient     | meatloaf mixture, unsmoked bacon, goat cheese, unsalted butter                   | [267.0, 30.0, 12.0, 12.0, 29.0, 48.0, 2.0]    |            5 |
 
 5. **Convert the values in the nutrition column into separate numeric nutrient columns.**
 In the original dataset, the nutrition column is stored as a string that looks like a list containing seven values. Each value corresponds to a different nutrient measurement.
@@ -141,7 +136,36 @@ Results: The cleaned DataFrame has 78,125 rows and 25 columns.
 | saturated_fat_density | float64 |
 | carbs_density         | float64 |
 
-Insert head of final DataFrame here
+Head of final DataFrame:
+
+<div style="overflow-x: auto;">
+  <div style="min-width: 1200px;">
+    <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>name</th>
+      <th>id</th>
+      <th>minutes</th>
+      <th>contributor_id</th>
+      <th>submitted</th>
+      <th>tags</th>
+      <th>n_steps</th>
+      <th>steps</th>
+      <th>description</th>
+      <th>ingredients</th>
+      <th>n_ingredients</th>
+      <th>avg_rating</th>
+      <th>calories</th>
+      <th>total_fat</th>
+      <th>sugar</th>
+      <th>sodium</th>
+      <th>protein</th>
+      <th>saturated_fat</th>
+      <th>carbs</th>
+...
+</table>
+  </div>
+</div>
 
 ### Univariate Analysis
 Oftentimes, we interpret healthy foods as being low calorie. This is likely due to the nature of whole, unprocessed foods being calorically less dense than fast food and other processed foods. As an overview of our data, here is the calorie distribution within the recipe dataset.
@@ -156,9 +180,15 @@ Oftentimes, we interpret healthy foods as being low calorie. This is likely due 
 
 
 ## Assessment of Missingness
+There are 3 columns in the merged dataset with missing values: `avg_rating`, `description`, and `name`. 
 
+I believe the description column may be MNAR. A recipe description is written by the contributor when uploading a recipe, and I suspect some contributors may omit the description if they feel it would be very short or not particularly informative. In this case, the probability that the description is missing depends on the the description itself.
 
+Additional variables such as data on the contributor's activity level and number of recipe postings could make the missingness of the `description` column MAR, or dependent on data other columns. For example, more active, experienced recipe posters may be more likely to include a description, so columns such as the total number of recipes posted by a contributor could make missing descriptions MAR.
+
+Now, I'll look at the missingness of the `avg_rating` column.
 ## Hypothesis Testing
+
 
 ## Framing a Prediction Problem
 
