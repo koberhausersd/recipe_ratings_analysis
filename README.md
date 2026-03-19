@@ -125,6 +125,7 @@ Results: The cleaned DataFrame has 78,125 rows and 25 columns.
 | protein_density       | float64 |
 | saturated_fat_density | float64 |
 | carbs_density         | float64 |
+| is_healthy            | bool    |
 
  Head of Final DataFrame:
 
@@ -158,6 +159,7 @@ Results: The cleaned DataFrame has 78,125 rows and 25 columns.
       <th>protein_density</th>
       <th>saturated_fat_density</th>
       <th>carbs_density</th>
+      <th>is_healthy</th>
     </tr>
   </thead>
   <tbody>
@@ -187,6 +189,7 @@ Results: The cleaned DataFrame has 78,125 rows and 25 columns.
       <td>0.02</td>
       <td>0.14</td>
       <td>4.34e-02</td>
+      <td>False</td>
     </tr>
     <tr>
       <td>1 in canada chocolate chip cookies</td>
@@ -214,6 +217,7 @@ Results: The cleaned DataFrame has 78,125 rows and 25 columns.
       <td>0.02</td>
       <td>0.09</td>
       <td>4.37e-02</td>
+      <td>False</td>
     </tr>
     <tr>
       <td>412 broccoli casserole</td>
@@ -241,6 +245,7 @@ Results: The cleaned DataFrame has 78,125 rows and 25 columns.
       <td>0.11</td>
       <td>0.18</td>
       <td>1.54e-02</td>
+      <td>False</td>
     </tr>
     <tr>
       <td>millionaire pound cake</td>
@@ -268,6 +273,7 @@ Results: The cleaned DataFrame has 78,125 rows and 25 columns.
       <td>0.02</td>
       <td>0.14</td>
       <td>4.44e-02</td>
+      <td>False</td>
     </tr>
     <tr>
       <td>2000 meatloaf</td>
@@ -295,6 +301,7 @@ Results: The cleaned DataFrame has 78,125 rows and 25 columns.
       <td>0.11</td>
       <td>0.18</td>
       <td>7.49e-03</td>
+      <td>False</td>
     </tr>
   </tbody>
 </table>
@@ -337,12 +344,34 @@ I also plotted calories vs saturated fat density
 
 Saturated fat density decreases as calories increase, with high-calorie recipes showing consistently lower saturated fat per calorie. In contrast, low-calorie recipes exhibit a wider range of saturated fat density.
 
+### Interesting Aggregates
+
+To compare recipes labeled as healthy with those that are not, I grouped the cleaned dataset by `is_healthy` and computed the mean of both the nutrient density variables and the original nutrition variables.
+
+#### Average Nutrient Densities by Healthy Label
+
+| is_healthy   |   total_fat_density |   sugar_density |   sodium_density |   protein_density |   saturated_fat_density |   carbs_density |
+|:-------------|--------------------:|----------------:|-----------------:|------------------:|------------------------:|----------------:|
+| False        |               0.075 |           0.152 |            0.078 |             0.08  |                   0.094 |           0.029 |
+| True         |               0.038 |           0.244 |            0.109 |             0.076 |                   0.035 |           0.047 |
+
+This table shows that recipes tagged as healthy tend to have lower total fat density and lower saturated fat density than recipes not tagged as healthy. However, healthy recipes also have higher sugar, sodium, and carbohydrate density on average, suggesting that “healthy” labels on Food.com do not simply correspond to being lower in every nutrient often perceived as unhealthy.
+
+#### Average Nutrition Values by Healthy Label
+
+| is_healthy   |   calories |   total_fat |   sugar |   sodium |   protein |   saturated_fat |   carbs |
+|:-------------|-----------:|------------:|--------:|---------:|----------:|----------------:|--------:|
+| False        |    348.244 |      28.077 |  43.116 |   21.31  |    29.678 |          35.079 |   9.672 |
+| True         |    268.467 |      11.239 |  54.281 |   17.136 |    22.106 |          10.467 |  12.5   |
+
+Looking at the original nutrition variables, healthy recipes have fewer calories, less total fat, and less saturated fat on average. At the same time, they have more sugar and carbohydrates on average, which reinforces that recipes labeled healthy may be lower in fat rather than uniformly lower in all nutrients.
+
 ## Assessment of Missingness
 There are 3 columns in the merged dataset with missing values: `avg_rating`, `description`, and `name`. 
 
 I believe the description column may be MNAR. A recipe description is written by the contributor when uploading a recipe, and I suspect some contributors may omit the description if they feel it would be very short or not particularly informative. In this case, the probability that the description is missing depends on the the description itself.
 
-Additional variables such as data on the contributor's activity level and number of recipe postings could make the missingness of the `description` column MAR, or dependent on data other columns. For example, more active, experienced recipe posters may be more likely to include a description, so columns such as the total number of recipes posted by a contributor could make missing descriptions MAR.
+Additional variables such as data on the contributor's activity level and number of recipe postings could make the missingness of the `description` column MAR, or dependent on data other columns. For example, more active, experienced recipe posters may be more likely to include a description in order to provide higher quality recipes for other users, so columns such as the total number of recipes posted by a contributor could make missing descriptions MAR.
 
 Now, I'll look at the missingness of the `avg_rating` column.
 
