@@ -86,7 +86,6 @@ After this transformation, the dataset increased from 13 columns to 19 columns, 
 Inspection of the distributions of the 7 nutrition variables revealed that the maximum values in each column were substantially larger than the 99th percentile. This indicates that a small number of recipes contain extremely large nutritional values, likely due to data entry errors or recipes that represent multiple servings rather than a single serving. Because these extreme values represent only a small proportion of the dataset and the number of servings per recipe is not provided, recipes with nutrition values above the 99th percentile for each nutrient were removed from the dataset.
 8. **Create nutrient density variables.**
 Except for calories, all other nutrient columns (total_fat, saturated_fat, sugar, protein, carbohydrates, sodium) are in PDV (percent daily value) units. To make these values comparable across recipes of different calorie levels, nutrient density variables were created by dividing each nutrient column by the calorie value in each recipe. These density features represent the amount of each nutrient per calorie, allowing for more meaningful comparisons between recipes with different calorie levels.
-
 The following columns were appended to the DataFrame:
 
 - `total_fat_density`
@@ -95,8 +94,11 @@ The following columns were appended to the DataFrame:
 - `protein_density`
 - `saturated_fat_density`
 - `carbs_density`
+9. **Add an 'is_healthy' column.**
+I added a binary `is_healthy` column indicating whether the recipe’s tag list contains “healthy,” enabling grouped analysis of nutritional differences between recipes tagged as healthy and those that are not.
 
-Results: The cleaned DataFrame has 78,125 rows and 25 columns.
+
+Results: The cleaned DataFrame has 78,125 rows and 26 columns.
 
 | column                | dtype   |
 |:----------------------|:--------|
@@ -367,16 +369,85 @@ This table shows that recipes tagged as healthy tend to have lower total fat den
 Looking at the original nutrition variables, healthy recipes have fewer calories, less total fat, and less saturated fat on average. At the same time, they have more sugar and carbohydrates on average, which reinforces that recipes labeled healthy may be lower in fat rather than uniformly lower in all nutrients.
 
 ## Assessment of Missingness
-There are 3 columns in the merged dataset with missing values: `avg_rating`, `description`, and `name`. 
+### MNAR Analysis
+There are three columns in the merged dataset with missing values: `avg_rating`, `description`, and `name`. After cleaning, most missing values remain in avg_rating and description, so I focus my analysis on these columns.
 
-I believe the description column may be MNAR. A recipe description is written by the contributor when uploading a recipe, and I suspect some contributors may omit the description if they feel it would be very short or not particularly informative. In this case, the probability that the description is missing depends on the the description itself.
+I believe the description column is likely MNAR (Missing Not At Random). Recipe descriptions are optional and written by contributors when submitting a recipe. It is plausible that contributors are more likely to omit a description if it would be very short, uninformative, or redundant. In this case, the probability that a description is missing depends on the unobserved value of the description itself, which is characteristic of MNAR data.
 
-Additional variables such as data on the contributor's activity level and number of recipe postings could make the missingness of the `description` column MAR, or dependent on data other columns. For example, more active, experienced recipe posters may be more likely to include a description in order to provide higher quality recipes for other users, so columns such as the total number of recipes posted by a contributor could make missing descriptions MAR.
+If additional data were available—such as contributor activity level, number of recipes posted, or engagement metrics, this might help explain the missingness. Conditioning on such variables could make the missingness MAR (Missing At Random) instead of MNAR.
 
-Now, I'll look at the missingness of the `avg_rating` column.
+### Missingness Dependency
+
+I next analyzed the missingness of the avg_rating column using permutation tests.
+
+I created an indicator variable:
+- `avg_rating_missing` = True if `avg_rating` is missing (NaN)
+- `avg_rating_missing` = False otherwise
+
+Then, I compared the distributions of variables between recipes with missing and non-missing ratings and used permutation tests to assess whether any observed differences are statistically significant.
+
+
+### Sugar Density and Missingness
+
+<iframe 
+  src="assets/sugar_density_dist.html" 
+  width="900" height="600" 
+  frameborder="0"
+></iframe> 
+
+The distribution of sugar density differs slightly between recipes with missing and non-missing ratings. Recipes with missing ratings tend to have somewhat higher sugar density values.
+
+Null Hypothesis:
+The distribution of sugar density is the same for recipes with missing and non-missing ratings.
+
+Alternative Hypothesis:
+The distribution of sugar density differs between the two groups.
+
+Test Statistic:
+Absolute difference in mean sugar density.
+
+Significance Level:
+0.05
+
+<iframe 
+  src="assets/sugar_permutation.html" 
+  width="900" height="600" 
+  frameborder="0"
+></iframe>
+
+The observed difference in mean sugar density lies in the extreme tail of the permutation distribution (observed ≈ 0.0062), resulting in a small p-value. Therefore, we reject the null hypothesis. This provides evidence that the missingness of `avg_rating` depends on sugar density.
+
+### Total Fat Density and Missingness
+
+<iframe 
+  src="assets/fat_density_dist.html"
+  width="900" height="600" 
+  frameborder="0"
+></iframe> 
+
+The distributions of total fat density for recipes with and without missing ratings appear very similar.
+
+Null Hypothesis:
+The distribution of total fat density is the same for recipes with missing and non-missing ratings.
+
+Alternative Hypothesis:
+The distribution of total fat density differs between the two groups.
+
+Test Statistic:
+Absolute difference in mean total fat density.
+
+Significance Level:
+0.05
+
+<iframe 
+  src="assets/fat_permutation.html"
+  width="900" height="600"
+  frameborder="0"
+></iframe>
+
+The observed statistic (≈ 0.0005) lies within the bulk of the permutation distribution, resulting in a relatively large p-value. Therefore, we fail to reject the null hypothesis. This suggests there is not strong evidence that the missingness of `avg_rating` depends on total fat density.
 
 ## Hypothesis Testing
-
 
 ## Framing a Prediction Problem
 
