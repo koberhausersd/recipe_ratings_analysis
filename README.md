@@ -65,6 +65,8 @@ After this transformation, the dataset increased from 13 columns to 19 columns, 
 |      878.3 |          63 |     326 |       13 |        20 |             123 |      39 |
 |      267   |          30 |      12 |       12 |        29 |              48 |       2 |
 
+<!-- -->
+
 6. **Remove rows with invalid nutrition data.**
 26 rows contained zero calories but non-zero values for sodium. Inspecting these rows revealed that many corresponded to non-food items (e.g., garbage disposal cleaner and dishwasher detergent), low-calorie items that have no nutritional value such as salt, or recipes where the zero-calorie nutrition information was clearly invalid (e.g., easy microwave popcorn, indian griddle flatbreads). Because these values are inconsistent and cannot represent real food items, these 26 rows were removed from the dataset.
 7. **Remove extreme outliers in the nutrition columns.**
