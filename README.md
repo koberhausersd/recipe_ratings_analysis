@@ -78,15 +78,7 @@ After this transformation, the dataset increased from 13 columns to 19 columns, 
 Inspection of the distributions of the 7 nutrition variables revealed that the maximum values in each column were substantially larger than the 99th percentile. This indicates that a small number of recipes contain extremely large nutritional values, likely due to data entry errors or recipes that represent multiple servings rather than a single serving. Because these extreme values represent only a small proportion of the dataset and the number of servings per recipe is not provided, recipes with nutrition values above the 99th percentile for each nutrient were removed from the dataset.
 8. **Create nutrient density variables.**
 Except for calories, all other nutrient columns (total_fat, saturated_fat, sugar, protein, carbohydrates, sodium) are in PDV (percent daily value) units. To make these values comparable across recipes of different calorie levels, nutrient density variables were created by dividing each nutrient column by the calorie value in each recipe. These density features represent the amount of each nutrient per calorie, allowing for more meaningful comparisons between recipes with different calorie levels.
-The following columns were appended to the DataFrame:
-
-- `total_fat_density`
-- `sugar_density`
-- `sodium_density`
-- `protein_density`
-- `saturated_fat_density`
-- `carbs_density`
-
+The following columns were appended to the DataFrame: `total_fat_density`, `sugar_density`, `sodium_density`, `protein_density`, `saturated_fat_density`, `carbs_density`
 9. **Add an 'is_healthy' column.**
 I added a binary `is_healthy` column indicating whether the recipe’s tag list contains “healthy,” enabling grouped analysis of nutritional differences between recipes tagged as healthy and those that are not.
 
