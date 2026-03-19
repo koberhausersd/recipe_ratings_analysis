@@ -52,14 +52,7 @@ The resulting DataFrame contains one row per recipe along with its average ratin
 The resulting dataset contains 13 columns (the original 12 columns from `recipes` plus `avg_rating`).
 5. **Convert the values in the nutrition column into separate numeric nutrient columns.**
 In the original dataset, the nutrition column is stored as a string that looks like a list containing seven values. Each value corresponds to a different nutrient measurement.
-To make these values usable for analysis, the brackets were first removed from the string and the remaining values were split on commas. This produced seven separate columns representing:
-- calories
-- total_fat
-- sugar
-- sodium
-- protein
-- saturated_fat
-- carbohydrates
+To make these values usable for analysis, the brackets were first removed from the string and the remaining values were split on commas. This produced seven separate columns representing calories, total_fat, sugar, sodium, protein, saturated_fat, and carbohydrates
 
 These columns were converted to float values and appended to the DataFrame. The original nutrition column was then dropped.
 After this transformation, the dataset increased from 13 columns to 19 columns, since the single nutrition column was replaced with seven separate nutrient columns. The first few rows of the new nutrition columns are shown below.
