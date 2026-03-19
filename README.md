@@ -1,4 +1,4 @@
-# Perceived Healthiness and Nutritional Content in Food.com Recipes
+# Perceived Healthiness and Nutritional Content in Recipes
 
 *Author: Kate Oberhauser*
 
@@ -11,7 +11,7 @@ This project investigates **which nutritional characteristics are most associate
 
 To explore this question, I analyze two datasets from Food.com, `recipes` and `interactions`, containing recipe postings and ratings.
 
-`recipes` contains 83782 rows and 12 columns:
+`recipes` contains 83,782 rows and 12 columns:
 
 | Column | Description |
 |-------|-------------|
@@ -26,7 +26,7 @@ To explore this question, I analyze two datasets from Food.com, `recipes` and `i
 | `steps` | Description of recipe steps |
 | `description` | User-provided description |
 
-`interactions` contains 731927 rows and 5 columns:
+`interactions` contains 73,1927 rows and 5 columns:
 
 | Column | Description |
 |-------|-------------|
@@ -49,16 +49,7 @@ Valid ratings range from 1 to 5, where 1 indicates a very negative rating and 5 
 The mean rating is calculated for each recipe using the ratings from the merged dataset. Because `NaN` values are ignored in mean calculations, missing ratings do not affect the result.
 4. **Merge the average ratings back into the `recipes` dataset.**
 The resulting DataFrame contains one row per recipe along with its average rating. This DataFrame is used for the remainder of the analysis.
-The resulting dataset contains 13 columns (the original 12 columns from `recipes` plus `avg_rating`). Because there are quite a few columns, a preview of the first 5 rows of a few relevant columns in the resulting dataset are shown below.
-
-| name                                 |   minutes | tags                                      | ingredients                                                                      | nutrition                                     |   avg_rating |
-|:-------------------------------------|----------:|:------------------------------------------|:---------------------------------------------------------------------------------|:----------------------------------------------|-------------:|
-| 1 brownies in the world    best ever |        40 | 60-minutes-or-less, time-to-make, course  | bittersweet chocolate, unsalted butter, eggs, granulated sugar                   | [138.4, 10.0, 50.0, 3.0, 3.0, 19.0, 6.0]      |            4 |
-| 1 in canada chocolate chip cookies   |        45 | 60-minutes-or-less, time-to-make, cuisine | white sugar, brown sugar, salt, margarine                                        | [595.1, 46.0, 211.0, 22.0, 13.0, 51.0, 26.0]  |            5 |
-| 412 broccoli casserole               |        40 | 60-minutes-or-less, time-to-make, course  | frozen broccoli cuts, cream of chicken soup, sharp cheddar cheese, garlic powder | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]     |            5 |
-| millionaire pound cake               |       120 | time-to-make, course, cuisine             | butter, sugar, eggs, all-purpose flour                                           | [878.3, 63.0, 326.0, 13.0, 20.0, 123.0, 39.0] |            5 |
-| 2000 meatloaf                        |        90 | time-to-make, course, main-ingredient     | meatloaf mixture, unsmoked bacon, goat cheese, unsalted butter                   | [267.0, 30.0, 12.0, 12.0, 29.0, 48.0, 2.0]    |            5 |
-
+The resulting dataset contains 13 columns (the original 12 columns from `recipes` plus `avg_rating`).
 5. **Convert the values in the nutrition column into separate numeric nutrient columns.**
 In the original dataset, the nutrition column is stored as a string that looks like a list containing seven values. Each value corresponds to a different nutrient measurement.
 To make these values usable for analysis, the brackets were first removed from the string and the remaining values were split on commas. This produced seven separate columns representing:
@@ -69,6 +60,7 @@ To make these values usable for analysis, the brackets were first removed from t
 - protein
 - saturated_fat
 - carbohydrates
+
 These columns were converted to float values and appended to the DataFrame. The original nutrition column was then dropped.
 After this transformation, the dataset increased from 13 columns to 19 columns, since the single nutrition column was replaced with seven separate nutrient columns. The first few rows of the new nutrition columns are shown below.
 
@@ -94,6 +86,7 @@ The following columns were appended to the DataFrame:
 - `protein_density`
 - `saturated_fat_density`
 - `carbs_density`
+
 9. **Add an 'is_healthy' column.**
 I added a binary `is_healthy` column indicating whether the recipe’s tag list contains “healthy,” enabling grouped analysis of nutritional differences between recipes tagged as healthy and those that are not.
 
@@ -317,7 +310,7 @@ Oftentimes, we interpret healthy foods as being low calorie. This is likely due 
   frameborder="0"
 ></iframe>
 
-As the plot shows, the distribution is skewed right, meaning that most of the data is lower calorie. Most of the recipes in our dataset are less than 500 calories, as the majority of the data lies to the left of the 500 mark on the x-axis.
+As the plot shows, the distribution is skewed right, meaning that most of the data is lower calorie.
 
 ### Bivariate Analysis
 
@@ -371,7 +364,7 @@ There are three columns in the merged dataset with missing values: `avg_rating`,
 
 I believe the description column is likely MNAR (Missing Not At Random). Recipe descriptions are optional and written by contributors when submitting a recipe. It is plausible that contributors are more likely to omit a description if it would be very short, uninformative, or redundant. In this case, the probability that a description is missing depends on the unobserved value of the description itself, which is characteristic of MNAR data.
 
-If additional data were available—such as contributor activity level, number of recipes posted, or engagement metrics, this might help explain the missingness. Conditioning on such variables could make the missingness MAR (Missing At Random) instead of MNAR.
+If additional data were available, such as contributor activity level, number of recipes posted, or engagement metrics, this might help explain the missingness. Conditioning on such variables could make the missingness MAR (Missing At Random) instead of MNAR.
 
 ### Missingness Dependency
 
@@ -456,7 +449,7 @@ Circling back to my question of what makes a recipe labeled healthy, I tested wh
 - **Null Hypothesis:** Recipes with the healthy tag have the same average calories as recipes without the healthy tag. Any observed difference is due to random chance.  
 - **Alternative Hypothesis:** Recipes with the healthy tag have a lower average calorie count than recipes without the healthy tag.  
 - **Test Statistic:** Difference in mean calories (Healthy − Not Healthy)
-- **Significance Level: ** 0.05
+- **Significance Level:** 0.05
 
 ### Results
 
@@ -471,7 +464,7 @@ A permutation test was conducted with 5000 repetitions. The resulting p-value wa
 ></iframe>
 
 ### Conclusion
-Since the p-value is less than 0.05, I reject the null hypothesis. This provides evidence that recipes labeled as healthy tend to have lower calorie counts than those that are not labeled as healthy. Since the p-value is less than 0.05, I reject the null hypothesis. This provides evidence that recipes labeled as healthy tend to have lower calorie counts than those that are not labeled as healthy. One possible explanation is that recipes perceived as healthy may include more whole-food ingredients, such as fruits and vegetables, which are generally lower in calories, although this was not directly tested in the analysis.
+Since the p-value is less than 0.05, I reject the null hypothesis. This provides evidence that recipes labeled as healthy tend to have lower calorie counts than those that are not labeled as healthy. One possible explanation is that recipes perceived as healthy may include more whole-food ingredients, such as fruits and vegetables, which are generally lower in calories, although this was not directly tested in the analysis.
 
 ## Framing a Prediction Problem
 My goal is to predict whether a recipe is labeled as **“healthy”** based on its nutritional and structural characteristics.  
@@ -484,7 +477,7 @@ The response variable is `is_healthy`, which indicates whether a recipe has the 
 
 From earlier analysis, we observed relationships between the presence of the healthy tag and calories, as well as associations between calories and other nutritional features such as saturated fat, sugar, and protein. Therefore, the model will use only recipe-level features available at submission time, such as nutrient values, nutrient densities, number of ingredients, number of steps, and tag-derived indicators. It will not use post-publication variables such as `avg_rating`, since they are only available after users interact with the recipe and would not be known at prediction time.  
 
-When evaluating the model, I will focus on the **F1-score**. This metric is appropriate because it balances precision and recall, making it more informative than accuracy when classes are imbalanced. In this dataset, there are more recipes without the healthy tag than with it, so F1-score ensures the model performs well in identifying healthy recipes without over-predicting them.
+When evaluating the model, I will focus on the **F1-score**. This metric is appropriate because it balances precision and recall, making it more informative than accuracy when classes are imbalanced. In this dataset, there are significantly more recipes without the healthy (63124) tag than with it (15001), so F1-score ensures the model performs well in identifying healthy recipes without over-predicting them.
 
 ## Baseline Model
 
