@@ -136,7 +136,7 @@ Results: The cleaned DataFrame has 78,125 rows and 25 columns.
 | saturated_fat_density | float64 |
 | carbs_density         | float64 |
 
-### Head of Final DataFrame
+ Head of Final DataFrame:
 
 <div style="overflow-x:auto;">
   <table style="white-space: nowrap;">
@@ -321,7 +321,31 @@ Oftentimes, we interpret healthy foods as being low calorie. This is likely due 
   frameborder="0"
 ></iframe>
 
+As the plot shows, there distribution is skewed right, meaning that most of the data is lower calorie. Most of the recipes in our dataset are less than 500 calories, as the majority of the data lies to the left of the 500 mark on the x-axis.
 
+### Bivariate Analysis
+
+I first examined calories and protein density in a scatter plot:
+
+<iframe
+  src="assets/calories_vs_protein_density_distribution.html"
+  width="900"
+  height="600"
+  frameborder="0"
+></iframe>
+
+There is a clear negative relationship between calories and protein density. Lower-calorie recipes tend to have higher protein density, while higher-calorie recipes generally have lower protein per calorie, suggesting that calorie-dense foods are often less protein-efficient.
+
+I also plotted calories vs saturated fat density
+
+<iframe
+  src="assets/calories_vs_saturated_fat_density_distribution.html"
+  width="900"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Saturated fat density decreases as calories increase, with high-calorie recipes showing consistently lower saturated fat per calorie. In contrast, low-calorie recipes exhibit a wider range of saturated fat density.
 
 ## Assessment of Missingness
 There are 3 columns in the merged dataset with missing values: `avg_rating`, `description`, and `name`. 
@@ -331,6 +355,7 @@ I believe the description column may be MNAR. A recipe description is written by
 Additional variables such as data on the contributor's activity level and number of recipe postings could make the missingness of the `description` column MAR, or dependent on data other columns. For example, more active, experienced recipe posters may be more likely to include a description, so columns such as the total number of recipes posted by a contributor could make missing descriptions MAR.
 
 Now, I'll look at the missingness of the `avg_rating` column.
+
 ## Hypothesis Testing
 
 
