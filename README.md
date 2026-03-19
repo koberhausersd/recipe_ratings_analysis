@@ -306,7 +306,7 @@ Oftentimes, we interpret healthy foods as being low calorie. This is likely due 
 <iframe
   src="assets/calorie_distribution.html"
   width="900"
-  height="600"
+  height="420"
   frameborder="0"
 ></iframe>
 
@@ -319,7 +319,7 @@ I first examined calories and protein density in a scatter plot:
 <iframe
   src="assets/calories_vs_protein_density.html"
   width="900"
-  height="600"
+  height="420"
   frameborder="0"
 ></iframe>
 
@@ -330,7 +330,7 @@ I also plotted calories vs saturated fat density
 <iframe
   src="assets/calories_vs_saturated_fat.html"
   width="900"
-  height="600"
+  height="420"
   frameborder="0"
 ></iframe>
 
@@ -381,7 +381,7 @@ For both tests below, I used the **absolute difference in means** as the test st
 <iframe
   src="assets/sugar_density_dist.html"
   width="900"
-  height="600"
+  height="420"
   frameborder="0"
 ></iframe>
 
@@ -402,7 +402,7 @@ Absolute difference in mean sugar density.
 <iframe
   src="assets/sugar_permutation.html"
   width="900"
-  height="600"
+  height="420"
   frameborder="0"
 ></iframe>
 
@@ -413,7 +413,7 @@ The permutation test produced a p-value of 0.1384. Since this value is greater t
 <iframe
   src="assets/satfat_density_dist.html"
   width="900"
-  height="600"
+  height="420"
   frameborder="0"
 ></iframe>
 
@@ -434,7 +434,7 @@ Absolute difference in mean saturated fat density.
 <iframe
   src="assets/satfat_permutation.html"
   width="900"
-  height="600"
+  height="420"
   frameborder="0"
 ></iframe>
 
@@ -460,7 +460,7 @@ A permutation test was conducted with 5000 repetitions. The resulting p-value wa
 <iframe
   src="assets/calories_permutation.html" 
   width="100%"
-  height="500"
+  height="420"
 ></iframe>
 
 ### Conclusion
@@ -477,7 +477,7 @@ The response variable is `is_healthy`, which indicates whether a recipe has the 
 
 From earlier analysis, we observed relationships between the presence of the healthy tag and calories, as well as associations between calories and other nutritional features such as saturated fat, sugar, and protein. Therefore, the model will use only recipe-level features available at submission time, such as nutrient values, nutrient densities, number of ingredients, number of steps, and tag-derived indicators. It will not use post-publication variables such as `avg_rating`, since they are only available after users interact with the recipe and would not be known at prediction time.  
 
-When evaluating the model, I will focus on the **F1-score**. This metric is appropriate because it balances precision and recall, making it more informative than accuracy when classes are imbalanced. In this dataset, there are significantly more recipes without the healthy (63124) tag than with it (15001), so F1-score ensures the model performs well in identifying healthy recipes without over-predicting them.
+When evaluating the model, I will focus on the **F1-score**. This metric is appropriate because it balances precision (the proportion of predicted positive instances that are correctly classified) and recall (the proportion of actually positive instances that are correctly classified), making it more informative than accuracy when classes are imbalanced. In this dataset, there are significantly more recipes without the healthy (63124) tag than with it (15001), so F1-score ensures the model performs well in identifying healthy recipes without over-predicting them.
 
 ## Baseline Model
 
@@ -516,7 +516,7 @@ In addition to the baseline features (`calories`, `protein_density`, `total_fat_
 - `low_carb_tag` (nominal, boolean): Indicates whether the recipe includes a low-carb label.  
 - `diet_tag` (nominal, boolean): Captures broader dietary-related labels such as low-calorie, low-sodium, or low-cholesterol.  
 
-These engineered features are useful because they incorporate both nutritional composition and labels from the `tags` column, which are directly related to how recipes are categorized as healthy.  
+These engineered features are useful because they incorporate both nutritional composition and labels from the `tags` column, which are directly related to how recipes are categorized as healthy. In particular, I expect the three additional tag features to improve the model because I suspect nutritional metrics such as `low_fat` or `low_carb` are highly correlated with the perceived healthiness of a recipe.
 
 ### Model and Hyperparameter Tuning  
 I used a **Random Forest classifier** within a Pipeline and performed hyperparameter tuning using **GridSearchCV** with 5-fold cross-validation.  
@@ -549,7 +549,7 @@ The improvement is likely due to the inclusion of additional nutritional feature
 
 ### Conclusion  
 
-The final model is a strong improvement over the baseline model, achieving both higher predictive performance and better generalization. By combining domain-relevant feature engineering with hyperparameter tuning, the model more effectively captures the relationship between recipe characteristics and the “healthy” label.
+The final model is a strong improvement over the baseline model, achieving both higher predictive performance and better generalization. By combining feature engineering with hyperparameter tuning, the model more effectively captures the relationship between recipe characteristics and the “healthy” label.
 
 ## Fairness Analysis
 Given the importance of calorie-related features, it is also important to evaluate whether the model performs differently across recipes with varying calorie levels. To evaluate fairness, I compared model performance across two groups:  
@@ -559,12 +559,12 @@ Given the importance of calorie-related features, it is also important to evalua
 
 ### Evaluation Metric  
 
-I used **recall** as the evaluation metric. Recall measures the proportion of truly healthy recipes that are correctly identified by the model. This allows us to assess whether the model is better at identifying healthy recipes in one group versus another.  
+I used **recall parity** as the evaluation metric. Recall measures the proportion of truly healthy recipes that are correctly identified by the model. This allows us to assess whether the model is better at identifying healthy recipes in one group versus another.  
 
 ### Hypotheses  
 
 - **Null Hypothesis:** The model is fair. Recall is the same for low-calorie and high-calorie recipes, and any observed difference is due to chance.  
-- **Alternative Hypothesis:** The model is more accurate for low-calorie recipes than for high-calorie recipes (i.e., recall is higher for low-calorie recipes).  
+- **Alternative Hypothesis:** The model is more unfair. It's recall for low-calorie recipes is higher than for high-calorie recipes.
 
 ### Test Statistic  
 Difference in recall: Recall (low-calorie group) − Recall (high-calorie group)  
@@ -578,7 +578,7 @@ A permutation test was conducted by randomly shuffling the calorie group labels.
 <iframe 
   src="assets/fairness_permutation.html"
   width="100%" 
-  height="500"
+  height="420"
 ></iframe>
 
 ---
