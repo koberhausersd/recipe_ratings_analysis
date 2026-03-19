@@ -485,7 +485,7 @@ When evaluating the model, I will focus on the **F1-score**. This metric is appr
 
 ### Model Description  
 
-For the baseline model, I used a **Random Forest classifier** implemented within an sklearn Pipeline.  
+For the baseline model, I used a **Random Forest classifier** implemented within an sklearn Pipeline. The Random Forest classifier will avoid overfitting to the training data, which a single decision tree is prone to.
 
 The model uses the following features:  
 - `calories` (quantitative)  
