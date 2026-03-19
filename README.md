@@ -328,7 +328,7 @@ As the plot shows, there distribution is skewed right, meaning that most of the 
 I first examined calories and protein density in a scatter plot:
 
 <iframe
-  src="assets/calories_vs_protein_density_distribution.html"
+  src="assets/calories_vs_protein_density.html"
   width="900"
   height="600"
   frameborder="0"
@@ -339,7 +339,7 @@ There is a clear negative relationship between calories and protein density. Low
 I also plotted calories vs saturated fat density
 
 <iframe
-  src="assets/calories_vs_saturated_fat_density_distribution.html"
+  src="assets/calories_vs_saturated_fat.html"
   width="900"
   height="600"
   frameborder="0"
