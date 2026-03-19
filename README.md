@@ -41,16 +41,26 @@ In my analysis, I will mainly focus on the `nutrition` and `tags` columns in the
 ## Data Cleaning and Exploratory Data Analysis
 ### Data Cleaning
 The data was cleaned using the following steps:
+
 **1. Left merge the recipes dataset with the ratings dataset.**
+
 This creates a single DataFrame containing both datasets by matching each recipe in `recipes` with its corresponding ratings in `interactions`.
+
 **2.Replace ratings of 0 with NaN.**
+
 Valid ratings range from 1 to 5, where 1 indicates a very negative rating and 5 indicates a very positive rating. A rating of 0 represents a missing rating rather than an actual score, so these values are replaced with NaN.
+
 **3.Compute the average rating for each recipe.**
+
 The mean rating is calculated for each recipe using the ratings from the merged dataset. Because `NaN` values are ignored in mean calculations, missing ratings do not affect the result.
+
 **4.Merge the average ratings back into the `recipes` dataset.**
+
 The resulting DataFrame contains one row per recipe along with its average rating. This DataFrame is used for the remainder of the analysis.
 The resulting dataset contains 13 columns (the original 12 columns from `recipes` plus `avg_rating`).
+
 **5.Convert the values in the nutrition column into separate numeric nutrient columns.**
+
 In the original dataset, the nutrition column is stored as a string that looks like a list containing seven values. Each value corresponds to a different nutrient measurement.
 To make these values usable for analysis, the brackets were first removed from the string and the remaining values were split on commas. This produced seven separate columns representing calories, total_fat, sugar, sodium, protein, saturated_fat, and carbohydrates.
 
@@ -66,13 +76,20 @@ After this transformation, the dataset increased from 13 columns to 19 columns, 
 |      267   |          30 |      12 |       12 |        29 |              48 |       2 |
 
 **6. Remove rows with invalid nutrition data.**
+
 26 rows contained zero calories but non-zero values for sodium. Inspecting these rows revealed that many corresponded to non-food items (e.g., garbage disposal cleaner and dishwasher detergent), low-calorie items that have no nutritional value such as salt, or recipes where the zero-calorie nutrition information was clearly invalid (e.g., easy microwave popcorn, indian griddle flatbreads). Because these values are inconsistent and cannot represent real food items, these 26 rows were removed from the dataset.
+
 **7.Remove extreme outliers in the nutrition columns.**
+
 Inspection of the distributions of the 7 nutrition variables revealed that the maximum values in each column were substantially larger than the 99th percentile. This indicates that a small number of recipes contain extremely large nutritional values, likely due to data entry errors or recipes that represent multiple servings rather than a single serving. Because these extreme values represent only a small proportion of the dataset and the number of servings per recipe is not provided, recipes with nutrition values above the 99th percentile for each nutrient were removed from the dataset.
+
 **8.Create nutrient density variables.**
+
 Except for calories, all other nutrient columns (total_fat, saturated_fat, sugar, protein, carbohydrates, sodium) are in PDV (percent daily value) units. To make these values comparable across recipes of different calorie levels, nutrient density variables were created by dividing each nutrient column by the calorie value in each recipe. These density features represent the amount of each nutrient per calorie, allowing for more meaningful comparisons between recipes with different calorie levels.
 The following columns were appended to the DataFrame: `total_fat_density`, `sugar_density`, `sodium_density`, `protein_density`, `saturated_fat_density`, and `carbs_density`
-9.****Add an 'is_healthy' column.**
+
+**9.Add an 'is_healthy' column.**
+
 I added a binary `is_healthy` column indicating whether the recipe’s tag list contains “healthy,” enabling grouped analysis of nutritional differences between recipes tagged as healthy and those that are not.
 
 Results: The cleaned DataFrame has 78,125 rows and 26 columns.
