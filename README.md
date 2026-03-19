@@ -1,4 +1,4 @@
-# Recipes Analysis: Investigation on the Relationship Between Percieved Healthiness and Nutritional Content.
+# Perceived Healthiness and Nutritional Content in Food.com Recipes
 
 *Author: Kate Oberhauser*
 
@@ -7,7 +7,7 @@
 
 In his 2007 essay "Unhappy Meals", journalist Michael Pollan offered this simple advice on healthy eating as a counter to reductionist nutritionism, the tendency to fixate on individual nutrients rather than the overall quality of the food we consume. Nearly twenty years later, however, nutrition guidance feels increasingly complicated and contradictory, as our tendency to focus on a single nutrient as the key to health persists. Each year seems to bring a new food fad, including the Atkins diet, the Mediterranean diet, and the ketogenic diet. Each celebrates one nutrient while demonizing another. In today’s age of protein, products ranging from cereal and chips to coffee and even Pop-Tarts are marketed with added protein. As different macronutrients rise and fall in popularity, the definition of what counts as “healthy” becomes increasingly blurry amid the constant shifts of dietary trends.
 
-With this in mind, this project investigates **what actually makes a recipe healthy and how a recipe’s healthiness relates to the nutrients it contains**. Specifically, I examine whether certain nutrients are more strongly associated with recipes labeled as healthy, or whether combinations of nutrients better explain these patterns. 
+This project investigates **which nutritional characteristics are most associated with recipes labeled as “healthy” on Food.com.** In particular, it examines which features of a recipe contribute to it being perceived as healthy and how that perception relates to its nutrient composition, focusing on whether individual nutrients or combinations of nutrients are more strongly associated with the “healthy” label.
 
 To explore this question, I analyze two datasets from Food.com, `recipes` and `interactions`, containing recipe postings and ratings.
 
@@ -97,7 +97,6 @@ The following columns were appended to the DataFrame:
 9. **Add an 'is_healthy' column.**
 I added a binary `is_healthy` column indicating whether the recipe’s tag list contains “healthy,” enabling grouped analysis of nutritional differences between recipes tagged as healthy and those that are not.
 
-
 Results: The cleaned DataFrame has 78,125 rows and 26 columns.
 
 | column                | dtype   |
@@ -132,181 +131,179 @@ Results: The cleaned DataFrame has 78,125 rows and 26 columns.
  Head of Final DataFrame:
 
 <div style="overflow-x:auto;">
-  <table style="white-space: nowrap;">
-    <table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th>name</th>
-      <th>id</th>
-      <th>minutes</th>
-      <th>contributor_id</th>
-      <th>submitted</th>
-      <th>tags</th>
-      <th>n_steps</th>
-      <th>steps</th>
-      <th>description</th>
-      <th>ingredients</th>
-      <th>n_ingredients</th>
-      <th>avg_rating</th>
-      <th>calories</th>
-      <th>total_fat</th>
-      <th>sugar</th>
-      <th>sodium</th>
-      <th>protein</th>
-      <th>saturated_fat</th>
-      <th>carbs</th>
-      <th>total_fat_density</th>
-      <th>sugar_density</th>
-      <th>sodium_density</th>
-      <th>protein_density</th>
-      <th>saturated_fat_density</th>
-      <th>carbs_density</th>
-      <th>is_healthy</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1 brownies in the world    best ever</td>
-      <td>333281</td>
-      <td>40</td>
-      <td>985201</td>
-      <td>2008-10-27</td>
-      <td>['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'for-large-groups', 'desserts', 'lunch', 'snacks', 'cookies-and-brownies', 'chocolate', 'bar-cookies', 'brownies', 'number-of-servings']</td>
-      <td>10</td>
-      <td>['heat the oven to 350f and arrange the rack in the middle', 'line an 8-by-8-inch glass baking dish with aluminum foil', 'combine chocolate and butter in a medi...</td>
-      <td>these are the most; chocolatey, moist, rich, dense, fudgy, delicious brownies that you'll ever make.....sereiously! there's no doubt that these will be your fav brownies ever for you can add things to them or make them plain.....either way they're pure heaven!</td>
-      <td>['bittersweet chocolate', 'unsalted butter', 'eggs', 'granulated sugar', 'unsweetened cocoa powder', 'vanilla extract', 'brewed espresso', 'kosher salt', 'all-purpose flour']</td>
-      <td>9</td>
-      <td>4.0</td>
-      <td>138.4</td>
-      <td>10.0</td>
-      <td>50.0</td>
-      <td>3.0</td>
-      <td>3.0</td>
-      <td>19.0</td>
-      <td>6.0</td>
-      <td>0.07</td>
-      <td>0.36</td>
-      <td>0.02</td>
-      <td>0.02</td>
-      <td>0.14</td>
-      <td>4.34e-02</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <td>1 in canada chocolate chip cookies</td>
-      <td>453467</td>
-      <td>45</td>
-      <td>1848091</td>
-      <td>2011-04-11</td>
-      <td>['60-minutes-or-less', 'time-to-make', 'cuisine', 'preparation', 'north-american', 'for-large-groups', 'canadian', 'british-columbian', 'number-of-servings']</td>
-      <td>12</td>
-      <td>['pre-heat oven the 350 degrees f', 'in a mixing bowl , sift together the flours and baking powder', 'set aside', 'in another mixing bowl , blend together the s...</td>
-      <td>this is the recipe that we use at my school cafeteria for chocolate chip cookies. they must be the best chocolate chip cookies i have ever had! if you don't have margarine or don't like it, then just use butter (softened) instead.</td>
-      <td>['white sugar', 'brown sugar', 'salt', 'margarine', 'eggs', 'vanilla', 'water', 'all-purpose flour', 'whole wheat flour', 'baking soda', 'chocolate chips']</td>
-      <td>11</td>
-      <td>5.0</td>
-      <td>595.1</td>
-      <td>46.0</td>
-      <td>211.0</td>
-      <td>22.0</td>
-      <td>13.0</td>
-      <td>51.0</td>
-      <td>26.0</td>
-      <td>0.08</td>
-      <td>0.35</td>
-      <td>0.04</td>
-      <td>0.02</td>
-      <td>0.09</td>
-      <td>4.37e-02</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <td>412 broccoli casserole</td>
-      <td>306168</td>
-      <td>40</td>
-      <td>50969</td>
-      <td>2008-05-30</td>
-      <td>['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']</td>
-      <td>6</td>
-      <td>['preheat oven to 350 degrees', 'spray a 2 quart baking dish with cooking spray , set aside', 'in a large bowl mix together broccoli , soup , one cup of cheese ...</td>
-      <td>since there are already 411 recipes for broccoli casserole posted to "zaar" ,i decided to call this one  #412 broccoli casserole.i don't think there are any like this one in the database. i based this one on the famous "green bean casserole" from campbell's soup. but i think mine is better since i don't like cream of mushroom soup.submitted to "zaar" on may 28th,2008</td>
-      <td>['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions']</td>
-      <td>9</td>
-      <td>5.0</td>
-      <td>194.8</td>
-      <td>20.0</td>
-      <td>6.0</td>
-      <td>32.0</td>
-      <td>22.0</td>
-      <td>36.0</td>
-      <td>3.0</td>
-      <td>0.10</td>
-      <td>0.03</td>
-      <td>0.16</td>
-      <td>0.11</td>
-      <td>0.18</td>
-      <td>1.54e-02</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <td>millionaire pound cake</td>
-      <td>286009</td>
-      <td>120</td>
-      <td>461724</td>
-      <td>2008-02-12</td>
-      <td>['time-to-make', 'course', 'cuisine', 'preparation', 'occasion', 'north-american', 'desserts', 'american', 'southern-united-states', 'dinner-party', 'holiday-event', 'cakes', 'dietary', 'christmas', 'thanksgiving', 'low-sodium', 'low-in-something', 'taste-mood', 'sweet', '4-hours-or-less']</td>
-      <td>7</td>
-      <td>['freheat the oven to 300 degrees', 'grease a 10-inch tube pan with butter , dust the bottom and sides with flour , and set aside', 'in a large mixing bowl , cr...</td>
-      <td>why a millionaire pound cake?  because it's super rich!  this scrumptious cake is the pride of an elderly belle from jackson, mississippi.  the recipe comes from "the glory of southern cooking" by james villas.</td>
-      <td>['butter', 'sugar', 'eggs', 'all-purpose flour', 'whole milk', 'pure vanilla extract', 'almond extract']</td>
-      <td>7</td>
-      <td>5.0</td>
-      <td>878.3</td>
-      <td>63.0</td>
-      <td>326.0</td>
-      <td>13.0</td>
-      <td>20.0</td>
-      <td>123.0</td>
-      <td>39.0</td>
-      <td>0.07</td>
-      <td>0.37</td>
-      <td>0.01</td>
-      <td>0.02</td>
-      <td>0.14</td>
-      <td>4.44e-02</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <td>2000 meatloaf</td>
-      <td>475785</td>
-      <td>90</td>
-      <td>2202916</td>
-      <td>2012-03-06</td>
-      <td>['time-to-make', 'course', 'main-ingredient', 'preparation', 'main-dish', 'potatoes', 'vegetables', '4-hours-or-less', 'meatloaf', 'simply-potatoes2']</td>
-      <td>17</td>
-      <td>['pan fry bacon , and set aside on a paper towel to absorb excess grease', 'mince yellow onion , red bell pepper , and add to your mixing bowl', 'chop garlic an...</td>
-      <td>ready, set, cook! special edition contest entry: a mediterranean flavor inspired meatloaf dish. featuring: simply potatoes - shredded hash browns, egg, bacon, spinach, red bell pepper, and goat cheese.</td>
-      <td>['meatloaf mixture', 'unsmoked bacon', 'goat cheese', 'unsalted butter', 'eggs', 'baby spinach', 'yellow onion', 'red bell pepper', 'simply potatoes shredded hash browns', 'fresh garlic', 'kosher salt', 'white pepper', 'olive oil']</td>
-      <td>13</td>
-      <td>5.0</td>
-      <td>267.0</td>
-      <td>30.0</td>
-      <td>12.0</td>
-      <td>12.0</td>
-      <td>29.0</td>
-      <td>48.0</td>
-      <td>2.0</td>
-      <td>0.11</td>
-      <td>0.04</td>
-      <td>0.04</td>
-      <td>0.11</td>
-      <td>0.18</td>
-      <td>7.49e-03</td>
-      <td>False</td>
-    </tr>
-  </tbody>
-</table>
+  <table border="1" class="dataframe" style="white-space: nowrap;">
+    <thead>
+      <tr style="text-align: right;">
+        <th>name</th>
+        <th>id</th>
+        <th>minutes</th>
+        <th>contributor_id</th>
+        <th>submitted</th>
+        <th>tags</th>
+        <th>n_steps</th>
+        <th>steps</th>
+        <th>description</th>
+        <th>ingredients</th>
+        <th>n_ingredients</th>
+        <th>avg_rating</th>
+        <th>calories</th>
+        <th>total_fat</th>
+        <th>sugar</th>
+        <th>sodium</th>
+        <th>protein</th>
+        <th>saturated_fat</th>
+        <th>carbs</th>
+        <th>total_fat_density</th>
+        <th>sugar_density</th>
+        <th>sodium_density</th>
+        <th>protein_density</th>
+        <th>saturated_fat_density</th>
+        <th>carbs_density</th>
+        <th>is_healthy</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1 brownies in the world    best ever</td>
+        <td>333281</td>
+        <td>40</td>
+        <td>985201</td>
+        <td>2008-10-27</td>
+        <td>['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'for-large-groups', 'desserts', 'lunch', 'snacks', 'cookies-and-brownies', 'chocolate', 'bar-cookies', 'brownies', 'number-of-servings']</td>
+        <td>10</td>
+        <td>['heat the oven to 350f and arrange the rack in the middle', 'line an 8-by-8-inch glass baking dish with aluminum foil', 'combine chocolate and butter in a medi...</td>
+        <td>these are the most; chocolatey, moist, rich, dense, fudgy, delicious brownies that you'll ever make.....sereiously! there's no doubt that these will be your fav brownies ever for you can add things to them or make them plain.....either way they're pure heaven!</td>
+        <td>['bittersweet chocolate', 'unsalted butter', 'eggs', 'granulated sugar', 'unsweetened cocoa powder', 'vanilla extract', 'brewed espresso', 'kosher salt', 'all-purpose flour']</td>
+        <td>9</td>
+        <td>4.0</td>
+        <td>138.4</td>
+        <td>10.0</td>
+        <td>50.0</td>
+        <td>3.0</td>
+        <td>3.0</td>
+        <td>19.0</td>
+        <td>6.0</td>
+        <td>0.07</td>
+        <td>0.36</td>
+        <td>0.02</td>
+        <td>0.02</td>
+        <td>0.14</td>
+        <td>4.34e-02</td>
+        <td>False</td>
+      </tr>
+      <tr>
+        <td>1 in canada chocolate chip cookies</td>
+        <td>453467</td>
+        <td>45</td>
+        <td>1848091</td>
+        <td>2011-04-11</td>
+        <td>['60-minutes-or-less', 'time-to-make', 'cuisine', 'preparation', 'north-american', 'for-large-groups', 'canadian', 'british-columbian', 'number-of-servings']</td>
+        <td>12</td>
+        <td>['pre-heat oven the 350 degrees f', 'in a mixing bowl , sift together the flours and baking powder', 'set aside', 'in another mixing bowl , blend together the s...</td>
+        <td>this is the recipe that we use at my school cafeteria for chocolate chip cookies. they must be the best chocolate chip cookies i have ever had! if you don't have margarine or don't like it, then just use butter (softened) instead.</td>
+        <td>['white sugar', 'brown sugar', 'salt', 'margarine', 'eggs', 'vanilla', 'water', 'all-purpose flour', 'whole wheat flour', 'baking soda', 'chocolate chips']</td>
+        <td>11</td>
+        <td>5.0</td>
+        <td>595.1</td>
+        <td>46.0</td>
+        <td>211.0</td>
+        <td>22.0</td>
+        <td>13.0</td>
+        <td>51.0</td>
+        <td>26.0</td>
+        <td>0.08</td>
+        <td>0.35</td>
+        <td>0.04</td>
+        <td>0.02</td>
+        <td>0.09</td>
+        <td>4.37e-02</td>
+        <td>False</td>
+      </tr>
+      <tr>
+        <td>412 broccoli casserole</td>
+        <td>306168</td>
+        <td>40</td>
+        <td>50969</td>
+        <td>2008-05-30</td>
+        <td>['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']</td>
+        <td>6</td>
+        <td>['preheat oven to 350 degrees', 'spray a 2 quart baking dish with cooking spray , set aside', 'in a large bowl mix together broccoli , soup , one cup of cheese ...</td>
+        <td>since there are already 411 recipes for broccoli casserole posted to "zaar" ,i decided to call this one  #412 broccoli casserole.i don't think there are any like this one in the database. i based this one on the famous "green bean casserole" from campbell's soup. but i think mine is better since i don't like cream of mushroom soup.submitted to "zaar" on may 28th,2008</td>
+        <td>['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions']</td>
+        <td>9</td>
+        <td>5.0</td>
+        <td>194.8</td>
+        <td>20.0</td>
+        <td>6.0</td>
+        <td>32.0</td>
+        <td>22.0</td>
+        <td>36.0</td>
+        <td>3.0</td>
+        <td>0.10</td>
+        <td>0.03</td>
+        <td>0.16</td>
+        <td>0.11</td>
+        <td>0.18</td>
+        <td>1.54e-02</td>
+        <td>False</td>
+      </tr>
+      <tr>
+        <td>millionaire pound cake</td>
+        <td>286009</td>
+        <td>120</td>
+        <td>461724</td>
+        <td>2008-02-12</td>
+        <td>['time-to-make', 'course', 'cuisine', 'preparation', 'occasion', 'north-american', 'desserts', 'american', 'southern-united-states', 'dinner-party', 'holiday-event', 'cakes', 'dietary', 'christmas', 'thanksgiving', 'low-sodium', 'low-in-something', 'taste-mood', 'sweet', '4-hours-or-less']</td>
+        <td>7</td>
+        <td>['freheat the oven to 300 degrees', 'grease a 10-inch tube pan with butter , dust the bottom and sides with flour , and set aside', 'in a large mixing bowl , cr...</td>
+        <td>why a millionaire pound cake?  because it's super rich!  this scrumptious cake is the pride of an elderly belle from jackson, mississippi.  the recipe comes from "the glory of southern cooking" by james villas.</td>
+        <td>['butter', 'sugar', 'eggs', 'all-purpose flour', 'whole milk', 'pure vanilla extract', 'almond extract']</td>
+        <td>7</td>
+        <td>5.0</td>
+        <td>878.3</td>
+        <td>63.0</td>
+        <td>326.0</td>
+        <td>13.0</td>
+        <td>20.0</td>
+        <td>123.0</td>
+        <td>39.0</td>
+        <td>0.07</td>
+        <td>0.37</td>
+        <td>0.01</td>
+        <td>0.02</td>
+        <td>0.14</td>
+        <td>4.44e-02</td>
+        <td>False</td>
+      </tr>
+      <tr>
+        <td>2000 meatloaf</td>
+        <td>475785</td>
+        <td>90</td>
+        <td>2202916</td>
+        <td>2012-03-06</td>
+        <td>['time-to-make', 'course', 'main-ingredient', 'preparation', 'main-dish', 'potatoes', 'vegetables', '4-hours-or-less', 'meatloaf', 'simply-potatoes2']</td>
+        <td>17</td>
+        <td>['pan fry bacon , and set aside on a paper towel to absorb excess grease', 'mince yellow onion , red bell pepper , and add to your mixing bowl', 'chop garlic an...</td>
+        <td>ready, set, cook! special edition contest entry: a mediterranean flavor inspired meatloaf dish. featuring: simply potatoes - shredded hash browns, egg, bacon, spinach, red bell pepper, and goat cheese.</td>
+        <td>['meatloaf mixture', 'unsmoked bacon', 'goat cheese', 'unsalted butter', 'eggs', 'baby spinach', 'yellow onion', 'red bell pepper', 'simply potatoes shredded hash browns', 'fresh garlic', 'kosher salt', 'white pepper', 'olive oil']</td>
+        <td>13</td>
+        <td>5.0</td>
+        <td>267.0</td>
+        <td>30.0</td>
+        <td>12.0</td>
+        <td>12.0</td>
+        <td>29.0</td>
+        <td>48.0</td>
+        <td>2.0</td>
+        <td>0.11</td>
+        <td>0.04</td>
+        <td>0.04</td>
+        <td>0.11</td>
+        <td>0.18</td>
+        <td>7.49e-03</td>
+        <td>False</td>
+      </tr>
+    </tbody>
   </table>
 </div>
 
@@ -320,7 +317,7 @@ Oftentimes, we interpret healthy foods as being low calorie. This is likely due 
   frameborder="0"
 ></iframe>
 
-As the plot shows, there distribution is skewed right, meaning that most of the data is lower calorie. Most of the recipes in our dataset are less than 500 calories, as the majority of the data lies to the left of the 500 mark on the x-axis.
+As the plot shows, the distribution is skewed right, meaning that most of the data is lower calorie. Most of the recipes in our dataset are less than 500 calories, as the majority of the data lies to the left of the 500 mark on the x-axis.
 
 ### Bivariate Analysis
 
@@ -370,7 +367,7 @@ Looking at the original nutrition variables, healthy recipes have fewer calories
 
 ## Assessment of Missingness
 ### MNAR Analysis
-There are three columns in the merged dataset with missing values: `avg_rating`, `description`, and `name`. After cleaning, most missing values remain in avg_rating and description, so I focus my analysis on these columns.
+There are three columns in the merged dataset with missing values: `avg_rating`, `description`, and `name`. After cleaning, most missing values remain in `avg_rating` and `description`, so I focus my analysis on these columns.
 
 I believe the description column is likely MNAR (Missing Not At Random). Recipe descriptions are optional and written by contributors when submitting a recipe. It is plausible that contributors are more likely to omit a description if it would be very short, uninformative, or redundant. In this case, the probability that a description is missing depends on the unobserved value of the description itself, which is characteristic of MNAR data.
 
@@ -416,7 +413,7 @@ Absolute difference in mean sugar density.
   frameborder="0"
 ></iframe>
 
-The permutation test produced a p-value of 0.1384. Since this value is greater than 0.05, I fail to reject the null hypothesis. This suggests that the missingness of avg_rating does not depend on sugar density.
+The permutation test produced a p-value of 0.1384. Since this value is greater than 0.05, I fail to reject the null hypothesis. This suggests that the missingness of `avg_rating` does not depend on sugar density.
 
 ### Saturated Fat Density and Missingness
 
@@ -451,7 +448,7 @@ Absolute difference in mean saturated fat density.
 The permutation test produced a p-value of 0.0058. Since this value is less than 0.05, I reject the null hypothesis. This provides evidence that the missingness of `avg_rating` depends on saturated fat density.
 
 ### Missingness Conclusion:
-The results indicate that missingness in `avg_rating` is not Missing Completely At Random (MCAR). While sugar density does not show a significant relationship, saturated fat density does. This suggests the missingness mechanism is consistent with Missing At Random (MAR), where missingness depends on observed variables.
+The results indicate that missingness in `avg_rating` is not Missing Completely At Random (MCAR). While sugar density does not show a significant relationship, saturated fat density does. This suggests the missingness of `avg_rating` is not MCAR and may be MAR, since it appears to depend on at least one observed variable.
 
 ## Hypothesis Testing
 Circling back to my question of what makes a recipe labeled healthy, I tested whether recipes tagged as healthy tend to have fewer calories than recipes that are not tagged as healthy.
@@ -474,7 +471,7 @@ A permutation test was conducted with 5000 repetitions. The resulting p-value wa
 ></iframe>
 
 ### Conclusion
-Since the p-value is less than 0.05, I reject the null hypothesis. This provides evidence that recipes labeled as healthy tend to have lower calorie counts than those that are not labeled as healthy. I suspect this could be because healthy recipes often contain whole food ingredients rather than processed ingredients, such as fruits and vegetables, which are by definition lower calorie foods.
+Since the p-value is less than 0.05, I reject the null hypothesis. This provides evidence that recipes labeled as healthy tend to have lower calorie counts than those that are not labeled as healthy. Since the p-value is less than 0.05, I reject the null hypothesis. This provides evidence that recipes labeled as healthy tend to have lower calorie counts than those that are not labeled as healthy. One possible explanation is that recipes perceived as healthy may include more whole-food ingredients, such as fruits and vegetables, which are generally lower in calories, although this was not directly tested in the analysis.
 
 ## Framing a Prediction Problem
 My goal is to predict whether a recipe is labeled as **“healthy”** based on its nutritional and structural characteristics.  
@@ -485,18 +482,11 @@ This is a **binary classification problem**, where each recipe is classified as 
 
 The response variable is `is_healthy`, which indicates whether a recipe has the “healthy” tag. This aligns with the central theme of the project: understanding how nutritional properties relate to perceived healthiness.  
 
-From earlier analysis, we observed relationships between the presence of the healthy tag and calories, as well as associations between calories and other nutritional features such as saturated fat, sugar, and protein. Therefore, the model will rely on:  
-
-- Nutritional features (e.g., calories, fat, sugar, protein, and nutrient densities)  
-- Recipe characteristics (e.g., number of ingredients and number of steps)  
-
-At the time of prediction, only information available when the recipe is created can be used. Therefore, variables such as `avg_rating` are excluded, since they are only available after users interact with the recipe and would not be known at prediction time.  
+From earlier analysis, we observed relationships between the presence of the healthy tag and calories, as well as associations between calories and other nutritional features such as saturated fat, sugar, and protein. Therefore, the model will use only recipe-level features available at submission time, such as nutrient values, nutrient densities, number of ingredients, number of steps, and tag-derived indicators. It will not use post-publication variables such as `avg_rating`, since they are only available after users interact with the recipe and would not be known at prediction time.  
 
 When evaluating the model, I will focus on the **F1-score**. This metric is appropriate because it balances precision and recall, making it more informative than accuracy when classes are imbalanced. In this dataset, there are more recipes without the healthy tag than with it, so F1-score ensures the model performs well in identifying healthy recipes without over-predicting them.
 
 ## Baseline Model
-
-## Step 6: Baseline Model  
 
 ### Model Description  
 
@@ -537,6 +527,8 @@ These engineered features are useful because they incorporate both nutritional c
 
 ### Model and Hyperparameter Tuning  
 I used a **Random Forest classifier** within a Pipeline and performed hyperparameter tuning using **GridSearchCV** with 5-fold cross-validation.  
+A Random Forest model is well-suited for this task because it can capture complex relationships between nutritional features and tag-based indicators while reducing overfitting compared to a single decision tree by averaging predictions across many trees.
+GridSearchCV was used to evaluate combinations of hyperparameters and select the model that maximizes cross-validated performance, helping ensure the final model generalizes well to unseen data.
 
 The following hyperparameters were tuned:  
 - `n_estimators`: number of trees in the forest  
@@ -556,23 +548,21 @@ The best-performing hyperparameters were:
 
 ### Interpretation  
 
-The final model shows a substantial improvement over the baseline model. The test F1-score increased from **0.4322** in the baseline model to **0.8020**, indicating significantly better performance on unseen data.  
+The final model shows a substantial improvement over the baseline model, with the test F1-score increasing by 0.3698 (from 0.4322 to 0.8020), indicating significantly better performance on unseen data.  
 
 Additionally, the gap between training and test performance is much smaller than in the baseline model, suggesting that the final model generalizes well and is less prone to overfitting.  
 
-The improvement is likely due to the inclusion of additional nutritional features and engineered tag-based features, which provide more informative signals about whether a recipe is labeled as healthy. In particular, features derived from tags (e.g., `low_fat_tag`, `diet_tag`) directly capture how recipes are categorized, making them highly predictive. This reflects people's tendency to evaluate the healthiness of a recipe based on the presence or absence of specific nutrients or labels, rather than a more holistic assessment of its overall nutritional quality.
+The improvement is likely due to the inclusion of additional nutritional features and engineered tag-based features, which provide more informative signals about whether a recipe is labeled as healthy. In particular, features derived from tags (e.g., `low_fat_tag`, `diet_tag`) directly capture how recipes are categorized, making them highly predictive. This suggests that perceived healthiness on Food.com may be driven by the presence or absence of specific nutrients or dietary labels, rather than by an overall balance of nutritional content.
 
 ### Conclusion  
 
 The final model is a strong improvement over the baseline model, achieving both higher predictive performance and better generalization. By combining domain-relevant feature engineering with hyperparameter tuning, the model more effectively captures the relationship between recipe characteristics and the “healthy” label.
 
 ## Fairness Analysis
-To evaluate fairness, I compared model performance across two groups:  
+Given the importance of calorie-related features, it is also important to evaluate whether the model performs differently across recipes with varying calorie levels. To evaluate fairness, I compared model performance across two groups:  
 
 - **Low-calorie recipes:** recipes with calories below or equal to the median  
 - **High-calorie recipes:** recipes with calories above the median  
-
----
 
 ### Evaluation Metric  
 
