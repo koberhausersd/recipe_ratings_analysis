@@ -96,16 +96,6 @@ The following columns were appended to the DataFrame:
 - `saturated_fat_density`
 - `carbs_density`
 
-The first five rows of these new columns are shown below.
-
-| total_fat_density | sugar_density | sodium_density | protein_density | saturated_fat_density | carbs_density |
-|------------------:|--------------:|---------------:|----------------:|----------------------:|--------------:|
-| 0.07 | 0.36 | 0.02 | 0.02 | 0.14 | 0.04 |
-| 0.08 | 0.35 | 0.04 | 0.02 | 0.09 | 0.04 |
-| 0.10 | 0.03 | 0.16 | 0.11 | 0.18 | 0.02 |
-| 0.07 | 0.37 | 0.01 | 0.02 | 0.14 | 0.04 |
-| 0.11 | 0.04 | 0.04 | 0.11 | 0.18 | 0.01 |
-
 Results: The cleaned DataFrame has 78,125 rows and 25 columns.
 
 | column                | dtype   |
