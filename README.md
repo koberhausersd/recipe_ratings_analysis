@@ -378,81 +378,230 @@ If additional data were available—such as contributor activity level, number o
 
 ### Missingness Dependency
 
-I next analyzed the missingness of the avg_rating column using permutation tests.
+To assess whether the missingness of `avg_rating` depends on observed variables, I performed permutation tests using `sugar_density` and `saturated_fat_density`.
 
 I created an indicator variable:
-- `avg_rating_missing` = True if `avg_rating` is missing (NaN)
-- `avg_rating_missing` = False otherwise
+- `avg_rating_missing = True` if `avg_rating` is missing
+- `avg_rating_missing = False` otherwise
 
-Then, I compared the distributions of variables between recipes with missing and non-missing ratings and used permutation tests to assess whether any observed differences are statistically significant.
-
+For both tests below, I used the **absolute difference in means** as the test statistic. This is appropriate because I am testing whether the distributions differ at all, not whether one group is specifically larger or smaller than the other.
 
 ### Sugar Density and Missingness
 
-<iframe 
-  src="assets/sugar_density_dist.html" 
-  width="900" height="600" 
+<iframe
+  src="assets/sugar_density_dist.html"
+  width="900"
+  height="600"
   frameborder="0"
-></iframe> 
+></iframe>
 
-The distribution of sugar density differs slightly between recipes with missing and non-missing ratings. Recipes with missing ratings tend to have somewhat higher sugar density values.
+The distributions of sugar density for recipes with missing and non-missing ratings appear similar, with only a slight shift. The observed difference in mean sugar density is approximately 0.0062.
 
-Null Hypothesis:
-The distribution of sugar density is the same for recipes with missing and non-missing ratings.
+**Null Hypothesis:**  
+The distribution of sugar density is the same for recipes with missing and non-missing average ratings.
 
-Alternative Hypothesis:
+**Alternative Hypothesis:**  
 The distribution of sugar density differs between the two groups.
 
-Test Statistic:
+**Test Statistic:**  
 Absolute difference in mean sugar density.
 
-Significance Level:
+**Significance Level:**  
 0.05
 
-<iframe 
-  src="assets/sugar_permutation.html" 
-  width="900" height="600" 
+<iframe
+  src="assets/sugar_permutation.html"
+  width="900"
+  height="600"
   frameborder="0"
 ></iframe>
 
-The observed difference in mean sugar density lies in the extreme tail of the permutation distribution (observed ≈ 0.0062), resulting in a small p-value. Therefore, we reject the null hypothesis. This provides evidence that the missingness of `avg_rating` depends on sugar density.
+The permutation test produced a p-value of 0.1384. Since this value is greater than 0.05, I fail to reject the null hypothesis. This suggests that the missingness of avg_rating does not depend on sugar density.
 
-### Total Fat Density and Missingness
+### Saturated Fat Density and Missingness
 
-<iframe 
-  src="assets/fat_density_dist.html"
-  width="900" height="600" 
-  frameborder="0"
-></iframe> 
-
-The distributions of total fat density for recipes with and without missing ratings appear very similar.
-
-Null Hypothesis:
-The distribution of total fat density is the same for recipes with missing and non-missing ratings.
-
-Alternative Hypothesis:
-The distribution of total fat density differs between the two groups.
-
-Test Statistic:
-Absolute difference in mean total fat density.
-
-Significance Level:
-0.05
-
-<iframe 
-  src="assets/fat_permutation.html"
-  width="900" height="600"
+<iframe
+  src="assets/satfat_density_dist.html"
+  width="900"
+  height="600"
   frameborder="0"
 ></iframe>
 
-The observed statistic (≈ 0.0005) lies within the bulk of the permutation distribution, resulting in a relatively large p-value. Therefore, we fail to reject the null hypothesis. This suggests there is not strong evidence that the missingness of `avg_rating` depends on total fat density.
+The observed difference in mean saturated fat density is approximately 0.0036
+
+**Null Hypothesis:**  
+The distribution of saturated fat density is the same for recipes with missing and non-missing average ratings.
+
+**Alternative Hypothesis:**  
+The distribution of saturated fat density differs between the two groups.
+
+**Test Statistic:**  
+Absolute difference in mean saturated fat density.
+
+**Significance Level:**  
+0.05
+
+<iframe
+  src="assets/satfat_permutation.html"
+  width="900"
+  height="600"
+  frameborder="0"
+></iframe>
+
+The permutation test produced a p-value of 0.0058. Since this value is less than 0.05, I reject the null hypothesis. This provides evidence that the missingness of `avg_rating` depends on saturated fat density.
+
+### Missingness Conclusion:
+The results indicate that missingness in `avg_rating` is not Missing Completely At Random (MCAR). While sugar density does not show a significant relationship, saturated fat density does. This suggests the missingness mechanism is consistent with Missing At Random (MAR), where missingness depends on observed variables.
 
 ## Hypothesis Testing
+Circling back to my question of what makes a recipe labeled healthy, I tested whether recipes tagged as healthy tend to have fewer calories than recipes that are not tagged as healthy.
+
+- **Null Hypothesis:** Recipes with the healthy tag have the same average calories as recipes without the healthy tag. Any observed difference is due to random chance.  
+- **Alternative Hypothesis:** Recipes with the healthy tag have a lower average calorie count than recipes without the healthy tag.  
+- **Test Statistic:** Difference in mean calories (Healthy − Not Healthy)
+- **Significance Level: ** 0.05
+
+### Results
+
+The observed difference in mean calories was **-79.78**, indicating that healthy recipes have fewer calories on average.
+
+A permutation test was conducted with 5000 repetitions. The resulting p-value was **0.0**.
+
+<iframe
+  src="/assets/calories_permutation.html" 
+  width="100%"
+  height="500"
+></iframe>
+
+### Conclusion
+Since the p-value is less than 0.05, I reject the null hypothesis. This provides evidence that recipes labeled as healthy tend to have lower calorie counts than those that are not labeled as healthy. I suspect this could be because healthy recipes often contain whole food ingredients rather than processed ingredients, such as fruits and vegetables, which are by definition lower calorie foods.
 
 ## Framing a Prediction Problem
+My goal is to predict whether a recipe is labeled as **“healthy”** based on its nutritional and structural characteristics.  
+
+This is a **binary classification problem**, where each recipe is classified as either:  
+- Healthy (`True`)  
+- Not healthy (`False`)  
+
+The response variable is `is_healthy`, which indicates whether a recipe has the “healthy” tag. This aligns with the central theme of the project: understanding how nutritional properties relate to perceived healthiness.  
+
+From earlier analysis, we observed relationships between the presence of the healthy tag and calories, as well as associations between calories and other nutritional features such as saturated fat, sugar, and protein. Therefore, the model will rely on:  
+
+- Nutritional features (e.g., calories, fat, sugar, protein, and nutrient densities)  
+- Recipe characteristics (e.g., number of ingredients and number of steps)  
+
+At the time of prediction, only information available when the recipe is created can be used. Therefore, variables such as `avg_rating` are excluded, since they are only available after users interact with the recipe and would not be known at prediction time.  
+
+When evaluating the model, I will focus on the **F1-score**. This metric is appropriate because it balances precision and recall, making it more informative than accuracy when classes are imbalanced. In this dataset, there are more recipes without the healthy tag than with it, so F1-score ensures the model performs well in identifying healthy recipes without over-predicting them.
 
 ## Baseline Model
 
+## Step 6: Baseline Model  
+
+### Model Description  
+
+For the baseline model, I used a **Random Forest classifier** implemented within an sklearn Pipeline.  
+
+The model uses the following features:  
+- `calories` (quantitative)  
+- `protein_density` (quantitative)  
+- `total_fat_density` (quantitative)  
+
+All features are numerical, so no encoding was required.  
+
+### Training and Evaluation  
+The data was split into training and testing sets using a 75/25 split. The model was trained on the training set and evaluated using **F1-score**, along with precision and recall.  
+- **Training F1-score:** 0.9788  
+- **Test F1-score:** 0.4322  
+- **Test Precision:** 0.4974  
+- **Test Recall:** 0.3822  
+
+### Interpretation  
+The baseline model performs very well on the training data but significantly worse on the test data. The large gap between the training F1-score (0.9788) and test F1-score (0.4322) indicates that the model is **overfitting** to the training data and does not generalize well to unseen data.  
+
+While the features used (calories, protein density, and fat density) provide some predictive signal, they are not sufficient on their own to accurately classify whether a recipe is healthy. Additionally, the relatively low recall suggests that the model is missing many recipes that are actually labeled as healthy.  
+
+Overall, this baseline model is not strong, but it provides a useful reference point for improvement in the final model.  
+
 ## Final Model
+To improve upon the baseline model, I introduced additional features that better capture how recipes are labeled as healthy.  
+
+In addition to the baseline features (`calories`, `protein_density`, `total_fat_density`), I added:  
+
+- `sugar_density` (quantitative): Sugar content is an important nutritional factor that may influence whether a recipe is perceived as healthy.  
+- `low_fat_tag` (nominal, boolean): Indicates whether the recipe explicitly includes a low-fat label.  
+- `low_carb_tag` (nominal, boolean): Indicates whether the recipe includes a low-carb label.  
+- `diet_tag` (nominal, boolean): Captures broader dietary-related labels such as low-calorie, low-sodium, or low-cholesterol.  
+
+These engineered features are useful because they incorporate both nutritional composition and labels from the `tags` column, which are directly related to how recipes are categorized as healthy.  
+
+### Model and Hyperparameter Tuning  
+I used a **Random Forest classifier** within a Pipeline and performed hyperparameter tuning using **GridSearchCV** with 5-fold cross-validation.  
+
+The following hyperparameters were tuned:  
+- `n_estimators`: number of trees in the forest  
+- `max_depth`: controls model complexity and helps prevent overfitting  
+- `min_samples_split`: prevents overly specific splits and improves generalization  
+
+The best-performing hyperparameters were:  
+- `n_estimators = 200`  
+- `max_depth = None`  
+- `min_samples_split = 20`  
+
+### Model Performance  
+- **Training F1-score:** 0.8864  
+- **Test F1-score:** 0.8020  
+- **Test Precision:** 0.8555  
+- **Test Recall:** 0.7548
+
+### Interpretation  
+
+The final model shows a substantial improvement over the baseline model. The test F1-score increased from **0.4322** in the baseline model to **0.8020**, indicating significantly better performance on unseen data.  
+
+Additionally, the gap between training and test performance is much smaller than in the baseline model, suggesting that the final model generalizes well and is less prone to overfitting.  
+
+The improvement is likely due to the inclusion of additional nutritional features and engineered tag-based features, which provide more informative signals about whether a recipe is labeled as healthy. In particular, features derived from tags (e.g., `low_fat_tag`, `diet_tag`) directly capture how recipes are categorized, making them highly predictive. This reflects people's tendency to evaluate the healthiness of a recipe based on the presence or absence of specific nutrients or labels, rather than a more holistic assessment of its overall nutritional quality.
+
+### Conclusion  
+
+The final model is a strong improvement over the baseline model, achieving both higher predictive performance and better generalization. By combining domain-relevant feature engineering with hyperparameter tuning, the model more effectively captures the relationship between recipe characteristics and the “healthy” label.
 
 ## Fairness Analysis
+To evaluate fairness, I compared model performance across two groups:  
+
+- **Low-calorie recipes:** recipes with calories below or equal to the median  
+- **High-calorie recipes:** recipes with calories above the median  
+
+---
+
+### Evaluation Metric  
+
+I used **recall** as the evaluation metric. Recall measures the proportion of truly healthy recipes that are correctly identified by the model. This allows us to assess whether the model is better at identifying healthy recipes in one group versus another.  
+
+### Hypotheses  
+
+- **Null Hypothesis:** The model is fair. Recall is the same for low-calorie and high-calorie recipes, and any observed difference is due to chance.  
+- **Alternative Hypothesis:** The model is more accurate for low-calorie recipes than for high-calorie recipes (i.e., recall is higher for low-calorie recipes).  
+
+### Test Statistic  
+Difference in recall: Recall (low-calorie group) − Recall (high-calorie group)  
+
+Observed difference: **0.065**  
+
+### Results  
+
+A permutation test was conducted by randomly shuffling the calorie group labels. The resulting p-value was **0.0**, indicating that the observed difference is highly unlikely to occur by chance.  
+
+<iframe 
+  src="/assets/fairness_permutation.html"
+  width="100%" 
+  height="500"
+></iframe>
+
+---
+
+### Conclusion  
+
+Since the p-value is less than 0.05, we reject the null hypothesis. There is strong evidence that the model achieves higher recall for low-calorie recipes than for high-calorie recipes.  
+
+This suggests that the model is more effective at identifying healthy recipes within the low-calorie group. One possible explanation is that lower-calorie recipes more closely align with patterns the model associates with healthiness, making them easier to classify correctly. 
