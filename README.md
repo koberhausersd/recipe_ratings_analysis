@@ -1,4 +1,4 @@
-# Recipes Analysis – What Actually Constitutes “Healthy”?
+# Recipes Analysis: Investigation on the Relationship Between Percieved Healthiness and Nutritional Content.
 
 *Author: Kate Oberhauser*
 
@@ -468,7 +468,7 @@ The observed difference in mean calories was **-79.78**, indicating that healthy
 A permutation test was conducted with 5000 repetitions. The resulting p-value was **0.0**.
 
 <iframe
-  src="/assets/calories_permutation.html" 
+  src="assets/calories_permutation.html" 
   width="100%"
   height="500"
 ></iframe>
@@ -593,7 +593,7 @@ Observed difference: **0.065**
 A permutation test was conducted by randomly shuffling the calorie group labels. The resulting p-value was **0.0**, indicating that the observed difference is highly unlikely to occur by chance.  
 
 <iframe 
-  src="/assets/fairness_permutation.html"
+  src="assets/fairness_permutation.html"
   width="100%" 
   height="500"
 ></iframe>
